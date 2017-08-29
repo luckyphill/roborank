@@ -1,0 +1,932 @@
+20110312,Shock Exchange,237,Death Quads,38
+20110409,Shock Exchange,267,Mass Maelstrom,41
+20110423,Race City,97,Twin Cities Terrors,195
+20110430,Mass Maelstrom,96,Death Quads,99
+20110514,St. Louis GateKeepers,201,Puget Sound,78
+20110514,Shock Exchange,125,Puget Sound,118
+20110514,Misfits,165,Dirty Dozen,120
+20110514,Race City,103,Death Quads,106
+20110514,Twin Cities Terrors,114,Dallas Deception,128
+20110514,Harm City,133,Dallas Deception,188
+20110515,St. Louis GateKeepers,158,Shock Exchange,138
+20110515,St. Louis GateKeepers,261,Harm City,56
+20110515,Shock Exchange,182,Dallas Deception,46
+20110515,Puget Sound,127,Dirty Dozen,102
+20110515,Puget Sound,234,Death Quads,95
+20110515,Misfits,211,Dallas Deception,104
+20110515,Misfits,210,Race City,109
+20110515,Race City,78,Dirty Dozen,205
+20110515,Twin Cities Terrors,175,Harm City,140
+20110515,Twin Cities Terrors,232,Death Quads,104
+20110604,Dirty Dozen,171,Death Quads,66
+20110605,Race City,116,Harm City,165
+20110611,St. Louis GateKeepers,207,Twin Cities Terrors,43
+20110611,Shock Exchange,195,Death Quads,40
+20110625,Shock Exchange,164,Dirty Dozen,96
+20110702,Your Mom,143,Puget Sound,237
+20110709,Race City,187,Twin Cities Terrors,102
+20110710,Death Quads,88,Harm City,192
+20110813,Shock Exchange,311,Harm City,89
+20110820,Your Mom,404,Cowtown Butchers,51
+20110820,Death Quads,220,Quadfathers,50
+20110821,Your Mom,240,Kornstalkers,88
+20110827,St. Louis GateKeepers,159,Your Mom,116
+20110904,Misfits,236,Race City,49
+20110917,Dirty Dozen,306,Quadfathers,26
+20111002,Dirty Dozen,138,Death Quads,38
+20111022,St. Louis GateKeepers,145,Misfits,170
+20111022,St. Louis GateKeepers,106,Puget Sound,127
+20111022,Shock Exchange,143,Puget Sound,133
+20111022,Shock Exchange,139,Misfits,131
+20111022,Puget Sound,225,Dirty Dozen,64
+20111022,Misfits,234,Dallas Deception,82
+20111022,Dirty Dozen,117,Dallas Deception,129
+20111112,Death Quads,195,Harm City,127
+20120204,Kornstalkers,115,Rock City Riot,239
+20120212,Bridgetown,93,Puget Sound,232
+20120331,Shock Exchange,366,Harm City,86
+20120331,Race City,144,Rock City Riot,132
+20120331,Race City,238,Kornstalkers,76
+20120331,Kornstalkers,124,Rock City Riot,179
+20120407,Mass Maelstrom,199,Quadfathers,126
+20120407,Kornstalkers,262,Cowtown Butchers,169
+20120414,Mass Maelstrom,207,Death Quads,172
+20120421,Your Mom,315,Kornstalkers,56
+20120421,Shock Exchange,416,Trauma Authority,47
+20120429,Dirty Dozen,229,Quadfathers,80
+20120506,Death Quads,307,Mean Mountain,30
+20120512,St. Louis GateKeepers,301,Bridgetown,72
+20120512,Your Mom,199,Shock Exchange,150
+20120512,Bridgetown,170,Race City,61
+20120512,Misfits,285,Rock City Riot,28
+20120512,Mass Maelstrom,135,Race City,168
+20120512,Kornstalkers,103,Death Quads,239
+20120512,Twin Cities Terrors,219,Dirty Dozen,99
+20120512,Twin Cities Terrors,195,Harm City,70
+20120513,St. Louis GateKeepers,125,Shock Exchange,131
+20120513,St. Louis GateKeepers,263,Dirty Dozen,43
+20120513,Your Mom,318,Dirty Dozen,59
+20120513,Your Mom,427,Harm City,50
+20120513,Bridgetown,296,Death Quads,72
+20120513,Bridgetown,82,Shock Exchange,270
+20120513,Misfits,617,Kornstalkers,100
+20120513,Misfits,407,Death Quads,100
+20120513,Mass Maelstrom,177,Rock City Riot,175
+20120513,Mass Maelstrom,249,Kornstalkers,116
+20120513,Race City,214,Twin Cities Terrors,110
+20120513,Rock City Riot,203,Harm City,171
+20120519,Trauma Authority,213,Quadfathers,102
+20120603,Mass Maelstrom,165,Dirty Dozen,148
+20120609,Bridgetown,90,Puget Sound,261
+20120609,Bridgetown,307,Lane County,60
+20120609,Shock Exchange,201,Mass Maelstrom,82
+20120609,Puget Sound,368,Lane County,47
+20120609,Kornstalkers,158,Cowtown Butchers,112
+20120609,Trauma Authority,119,Death Quads,138
+20120616,Death Quads,188,Harm City,202
+20120623,Misfits,267,Race City,107
+20120630,St. Louis GateKeepers,340,Dallas Deception,84
+20120630,Mass Maelstrom,143,Harm City,184
+20120706,Mass Maelstrom,327,Dirty Dozen,70
+20120707,Your Mom,257,Puget Sound,143
+20120714,Twin Cities Terrors,124,Rock City Riot,103
+20120804,Race City,170,Deep Valley,119
+20120804,Race City,188,Harm City,111
+20120804,Dirty Dozen,191,Death Quads,173
+20120804,Harm City,219,Deep Valley,178
+20120811,St. Louis GateKeepers,197,Shock Exchange,141
+20120812,St. Louis GateKeepers,325,Death Quads,68
+20120818,Shock Exchange,537,Mean Mountain,22
+20120818,Mass Maelstrom,231,Trauma Authority,74
+20120818,Race City,380,Quadfathers,31
+20120818,Twin Cities Terrors,130,Dallas Deception,237
+20120818,Trauma Authority,306,Quadfathers,57
+20120818,Dirty Dozen,299,Mean Mountain,75
+20120818,Dirty Dozen,93,Death Quads,138
+20120819,Shock Exchange,281,Mass Maelstrom,52
+20120819,Shock Exchange,399,Death Quads,66
+20120819,Mass Maelstrom,203,Race City,125
+20120819,Race City,201,Death Quads,156
+20120819,Trauma Authority,160,Dirty Dozen,163
+20120819,Quadfathers,167,Mean Mountain,149
+20120901,Your Mom,399,Rock City Riot,21
+20120901,Kornstalkers,160,Cowtown Butchers,245
+20120902,Kornstalkers,134,Rock City Riot,226
+20120908,Mass Maelstrom,479,Mean Mountain,87
+20120922,St. Louis GateKeepers,330,Your Mom,78
+20120923,St. Louis GateKeepers,300,Race City,76
+20121020,St. Louis GateKeepers,359,Dallas Deception,72
+20121020,Your Mom,192,Mass Maelstrom,93
+20121020,Bridgetown,157,Mass Maelstrom,169
+20121020,Bridgetown,103,Shock Exchange,226
+20121020,Puget Sound,291,Dallas Deception,75
+20121020,Puget Sound,161,Misfits,199
+20121021,St. Louis GateKeepers,135,Your Mom,136
+20121021,St. Louis GateKeepers,199,Shock Exchange,167
+20121021,Your Mom,188,Misfits,87
+20121021,Shock Exchange,199,Misfits,157
+20121021,Puget Sound,221,Mass Maelstrom,137
+20121027,Lane County,72,Deep Valley,270
+20121208,Rattleskates,115,Deep Valley,303
+20130223,Rattleskates,165,Dallas Deception,149
+20130323,Trauma Authority,166,Death Quads,129
+20130330,Kornstalkers,86,Rock City Riot,265
+20130330,Death Quads,316,Mean Mountain,114
+20130406,Shock Exchange,444,Mont Royals,50
+20130407,Misfits,443,Tampa Bay,32
+20130413,Bridgetown,190,Deep Valley,177
+20130413,Kornstalkers,254,Smackers,68
+20130414,Kornstalkers,242,Blitzdkrieg,229
+20130420,Misfits,354,Wreckingballs,34
+20130420,Mont Royals,303,Mean Mountain,126
+20130420,Trauma Authority,305,Quadfathers,101
+20130421,Drive-By,111,Rattleskates,217
+20130427,St. Louis GateKeepers,134,Your Mom,157
+20130504,Shock Exchange,379,Trauma Authority,100
+20130517,St. Louis GateKeepers,240,Mass Maelstrom,92
+20130517,Your Mom,363,Wreckingballs,19
+20130517,Southern Discomfort,159,Deep Valley,208
+20130517,Misfits,348,Race City,88
+20130517,Rattleskates,235,Capital City,164
+20130517,Blitzdkrieg,67,Harm City,327
+20130518,St. Louis GateKeepers,416,Rock City Riot,50
+20130518,Southern Discomfort,157,Puget Sound,271
+20130518,Bridgetown,262,Race City,167
+20130518,Misfits,182,Mass Maelstrom,144
+20130518,Wreckingballs,138,Rock City Riot,185
+20130518,Rattleskates,375,Lane County,60
+20130518,Lane County,203,Capital City,210
+20130519,St. Louis GateKeepers,443,Race City,65
+20130519,Your Mom,254,Bridgetown,55
+20130519,Your Mom,447,Blitzdkrieg,23
+20130519,Southern Discomfort,248,Drive-By,247
+20130519,Bridgetown,185,Mass Maelstrom,119
+20130519,Puget Sound,211,Deep Valley,130
+20130519,Misfits,446,Harm City,87
+20130519,Drive-By,385,Capital City,100
+20130519,Wreckingballs,218,Blitzdkrieg,93
+20130519,Rock City Riot,196,Harm City,213
+20130520,Southern Discomfort,544,Lane County,76
+20130601,Race City,327,Harm City,106
+20130601,Trauma Authority,333,Mean Mountain,73
+20130601,Death Quads,259,Quadfathers,69
+20130615,Your Mom,200,Shock Exchange,157
+20130615,Bridgetown,199,Puget Sound,242
+20130616,Your Mom,560,Mean Mountain,20
+20130622,Kornstalkers,198,Rock City Riot,274
+20130622,Kornstalkers,136,Dallas Deception,368
+20130622,Kornstalkers,245,Cowtown Butchers,155
+20130622,Twin Cities Terrors,233,Rock City Riot,172
+20130622,Rock City Riot,333,Cowtown Butchers,98
+20130622,Blitzdkrieg,246,Smackers,99
+20130623,Kornstalkers,112,Rock City Riot,188
+20130623,Kornstalkers,274,Cowtown Butchers,133
+20130623,Twin Cities Terrors,283,Rock City Riot,99
+20130623,Twin Cities Terrors,179,Dallas Deception,218
+20130628,Shock Exchange,170,Mass Maelstrom,158
+20130629,St. Louis GateKeepers,240,Misfits,114
+20130713,Kornstalkers,76,Rock City Riot,287
+20130714,Mass Maelstrom,522,Harm City,12
+20130720,Mont Royals,167,Death Quads,182
+20130720,Twin Cities Terrors,235,Blitzdkrieg,116
+20130720,Twin Cities Terrors,431,Smackers,5
+20130720,Blitzdkrieg,170,Smackers,117
+20130727,St. Louis GateKeepers,196,Shock Exchange,103
+20130727,Quadfathers,330,Mean Mountain,63
+20130728,Shock Exchange,265,Race City,118
+20130803,Shock Exchange,195,Mass Maelstrom,107
+20130803,Wreckingballs,181,Harm City,184
+20130810,Manchester (Men's),516,Dirty Dozen,57
+20130810,Death Quads,208,Harm City,143
+20130817,Shock Exchange,315,Manchester (Men's),79
+20130817,Puget Sound,495,Quadfathers,41
+20130817,Mass Maelstrom,366,Mont Royals,61
+20130817,Manchester (Men's),166,Trauma Authority,245
+20130817,Mont Royals,227,Quadfathers,104
+20130817,Twin Cities Terrors,289,Rock City Riot,90
+20130817,Trauma Authority,210,Death Quads,218
+20130818,Shock Exchange,155,Mass Maelstrom,167
+20130818,Shock Exchange,432,Death Quads,80
+20130818,Puget Sound,424,Death Quads,91
+20130818,Puget Sound,130,Mass Maelstrom,228
+20130818,Manchester (Men's),231,Quadfathers,123
+20130818,Mont Royals,243,Trauma Authority,233
+20130824,Bridgetown,192,Deep Valley,170
+20130824,Bridgetown,254,Drive-By,37
+20130824,Drive-By,179,Deep Valley,264
+20130824,Uinta,151,Capital City,393
+20130824,Rattleskates,329,Slick City,66
+20130825,St. Louis GateKeepers,341,Dallas Deception,70
+20130831,St. Louis GateKeepers,133,Bridgetown,128
+20130831,St. Louis GateKeepers,267,Deep Valley,113
+20130831,Bridgetown,203,Puget Sound,127
+20130831,Puget Sound,187,Deep Valley,147
+20130901,St. Louis GateKeepers,188,Puget Sound,147
+20130914,Kornstalkers,206,Cowtown Butchers,208
+20130928,Drive-By,234,Rattleskates,256
+20131006,Tampa Bay,130,Wreckingballs,189
+20131006,Wreckingballs,189,Hitmen,111
+20131019,St. Louis GateKeepers,163,Puget Sound,151
+20131019,Your Mom,330,Deep Valley,51
+20131019,Bridgetown,250,Deep Valley,107
+20131019,Bridgetown,115,Shock Exchange,171
+20131019,Puget Sound,167,Misfits,109
+20131019,Misfits,144,Mass Maelstrom,212
+20131020,St. Louis GateKeepers,168,Mass Maelstrom,102
+20131020,St. Louis GateKeepers,149,Shock Exchange,161
+20131020,Your Mom,249,Shock Exchange,130
+20131020,Your Mom,173,Mass Maelstrom,119
+20131020,Bridgetown,179,Puget Sound,204
+20131110,Death Quads,444,Mean Mountain,112
+20140222,Mass Maelstrom,680,Mean Mountain,15
+20140301,Battering Rams,273,Bruise Brothers,114
+20140302,Misfits,195,Wreckingballs,87
+20140302,Race City,385,Bruise Brothers,82
+20140308,Uinta,189,Capital City,187
+20140315,Drive-By,251,Slick City,211
+20140322,Mass Maelstrom,470,Trauma Authority,36
+20140329,Southern Discomfort,192,Manchester (Men's),97
+20140329,Reservoir Dogs,209,Dreadnaughts,98
+20140329,Kornstalkers,348,Big O,101
+20140405,Tampa Bay,162,Wreckingballs,109
+20140405,Race City,100,Deep Valley,231
+20140405,Race City,137,Drive-By,205
+20140405,Drive-By,129,Deep Valley,150
+20140412,Mont Royals,223,Trauma Authority,128
+20140412,Kornstalkers,273,Cowtown Butchers,115
+20140413,Mont Royals,265,Death Quads,90
+20140419,St. Louis GateKeepers,432,Battering Rams,33
+20140419,Bruise Brothers,117,Cap City Hooligans,108
+20140420,Misfits,220,Wreckingballs,84
+20140427,Big O,226,Cowtown Butchers,133
+20140502,Bridgetown,234,Drive-By,125
+20140502,Drive-By,190,Deep Valley,192
+20140503,Bridgetown,253,Rattleskates,58
+20140503,Bridgetown,209,Deep Valley,119
+20140503,Puget Sound,217,Drive-By,61
+20140503,Race City,180,Battering Rams,166
+20140503,Trauma Authority,239,Harm City,127
+20140504,Bridgetown,173,Puget Sound,194
+20140504,Puget Sound,247,Rattleskates,87
+20140504,Rattleskates,187,Deep Valley,286
+20140504,Quadfathers,197,Harm City,128
+20140509,Reservoir Dogs,229,Uinta,145
+20140509,Uinta,287,Lane County,114
+20140510,Your Mom,334,Twin Cities Terrors,61
+20140510,Your Mom,273,Southern Discomfort,87
+20140510,Southern Discomfort,259,Twin Cities Terrors,121
+20140510,Reservoir Dogs,327,Lane County,65
+20140510,Kornstalkers,185,Uinta,142
+20140510,Kornstalkers,215,Dreadnaughts,67
+20140510,Uinta,228,Dreadnaughts,104
+20140511,Reservoir Dogs,195,Kornstalkers,135
+20140511,Lane County,112,Dreadnaughts,135
+20140513,Southern Discomfort,466,Cap City Hooligans,38
+20140516,Southern Discomfort,131,Mass Maelstrom,184
+20140516,Texas Men's,291,Wreckingballs,76
+20140516,Misfits,173,Race City,167
+20140517,St. Louis GateKeepers,419,Mont Royals,12
+20140517,Your Mom,219,Mass Maelstrom,82
+20140517,Southern Discomfort,195,Texas Men's,96
+20140517,Misfits,184,Battering Rams,135
+20140517,Mont Royals,150,Battering Rams,151
+20140517,Race City,239,Death Quads,97
+20140517,Wreckingballs,182,Death Quads,163
+20140518,St. Louis GateKeepers,279,Southern Discomfort,66
+20140518,St. Louis GateKeepers,289,Misfits,101
+20140518,Your Mom,473,Mont Royals,18
+20140518,Southern Discomfort,375,Death Quads,62
+20140518,Texas Men's,288,Mont Royals,136
+20140518,Mass Maelstrom,285,Battering Rams,68
+20140518,Race City,252,Wreckingballs,116
+20140523,Reservoir Dogs,207,Dreadnaughts,161
+20140525,Reservoir Dogs,241,Dreadnaughts,155
+20140530,Battering Rams,148,Twin Cities Terrors,258
+20140530,Blitzdkrieg,259,Bruise Brothers,127
+20140531,Puget Sound,413,Rock City Riot,45
+20140531,Tampa Bay,137,Tulsa Derby Militia,126
+20140531,Trauma Authority,237,Quadfathers,132
+20140531,Blitzdkrieg,125,Dallas Deception,429
+20140601,Puget Sound,233,Dallas Deception,127
+20140601,Twin Cities Terrors,318,Blitzdkrieg,113
+20140601,Rock City Riot,329,Bruise Brothers,132
+20140607,Tyne & Fear,274,Inhuman,138
+20140607,Race City,320,Cap City Hooligans,45
+20140620,Shock Exchange,253,Mass Maelstrom,142
+20140621,Reservoir Dogs,328,Dreadnaughts,63
+20140712,Texas Men's,162,Dallas Deception,104
+20140712,Mont Royals,236,Quadfathers,123
+20140713,Misfits,400,Tampa Bay,30
+20140719,St. Louis GateKeepers,452,Kornstalkers,17
+20140719,Blitzdkrieg,279,Bruise Brothers,77
+20140719,Death Quads,140,Quadfathers,101
+20140720,St. Louis GateKeepers,702,Tulsa Derby Militia,1
+20140726,St. Louis GateKeepers,161,Shock Exchange,153
+20140726,Silures,437,Inhuman,35
+20140727,St. Louis GateKeepers,282,Bridgetown,77
+20140727,Bridgetown,111,Shock Exchange,157
+20140803,Race City,315,Cap City Hooligans,49
+20140816,Bridgetown,155,Puget Sound,157
+20140816,Mass Maelstrom,365,Jersey Boys,74
+20140816,Twin Cities Terrors,600,Mean Mountain,42
+20140816,Rattleskates,249,Deep Valley,212
+20140816,Jersey Boys,288,Mean Mountain,110
+20140816,Quadfathers,194,Harm City,102
+20140817,Texas Men's,144,Rattleskates,128
+20140817,Texas Men's,241,Deep Valley,114
+20140817,Shock Exchange,306,Mass Maelstrom,70
+20140817,Shock Exchange,498,Quadfathers,27
+20140817,Mass Maelstrom,240,Twin Cities Terrors,143
+20140817,Twin Cities Terrors,214,Quadfathers,132
+20140817,Harm City,355,Mean Mountain,98
+20140823,St. Louis GateKeepers,382,Dallas Deception,14
+20140823,Your Mom,499,Cowtown Butchers,0
+20140824,Race City,160,Dallas Deception,180
+20140830,Misfits,305,Wreckingballs,62
+20140830,Tyne & Fear,146,Manchester (Men's),127
+20140830,Rolling Thunder,209,Silures,227
+20140830,Rock City Riot,231,Bomberz,92
+20140830,Rock City Riot,270,Blitzdkrieg,85
+20140830,Blitzdkrieg,88,Bomberz,178
+20140831,Your Mom,571,Cap City Hooligans,22
+20140831,Your Mom,327,Battering Rams,24
+20140831,Southern Discomfort,370,Silures,66
+20140831,Southern Discomfort,275,Tyne & Fear,86
+20140831,Tyne & Fear,224,Quad Guards,109
+20140831,Rolling Thunder,240,Manchester (Men's),126
+20140831,Quad Guards,146,Silures,162
+20140831,Battering Rams,241,Cap City Hooligans,95
+20140906,Trauma Authority,123,Jersey Boys,153
+20140914,St. Louis GateKeepers,547,Race City,4
+20140920,Mont Royals,252,Death Quads,71
+20140927,Kornstalkers,201,Rock City Riot,116
+20141004,Tyne & Fear,185,Barrow,120
+20141004,Tampa Bay,129,Wreckingballs,162
+20141018,St. Louis GateKeepers,288,Southern Discomfort,87
+20141018,Your Mom,314,Texas Men's,58
+20141018,Southern Discomfort,177,Bridgetown,163
+20141018,Bridgetown,176,Puget Sound,226
+20141018,Texas Men's,187,Mass Maelstrom,122
+20141018,Shock Exchange,275,Mass Maelstrom,75
+20141018,Trauma Authority,113,Death Quads,160
+20141019,St. Louis GateKeepers,139,Your Mom,172
+20141019,St. Louis GateKeepers,252,Shock Exchange,159
+20141019,Your Mom,153,Puget Sound,137
+20141019,Southern Discomfort,262,Texas Men's,102
+20141019,Shock Exchange,196,Puget Sound,148
+20141108,Reservoir Dogs,213,Lane County,105
+20141108,Uinta,186,Lane County,134
+20141109,Reservoir Dogs,160,Uinta,165
+20141206,Lane County,213,Salem Men's,171
+20150131,Philly Hooligans,157,Jersey Boys,216
+20150207,Texas Men's,288,Misfits,76
+20150207,Texas Men's,449,Collision,64
+20150208,Misfits,317,Collision,81
+20150227,Aftershocks,494,Reservoir Dogs,110
+20150228,Puget Sound,544,Reservoir Dogs,50
+20150228,Silures,210,Manchester (Men's),124
+20150301,Trauma Authority,119,Quadfathers,140
+20150307,Your Mom,582,Cap City Hooligans,2
+20150307,Your Mom,164,Shock Exchange,125
+20150307,Shock Exchange,761,Cap City Hooligans,3
+20150307,Aftershocks,195,Rattleskates,168
+20150307,Rolling Thunder,157,Silures,200
+20150307,Mont Royals,278,Toronto Men's,86
+20150308,Aftershocks,182,Drive-By,107
+20150308,Drive-By,124,Rattleskates,274
+20150321,Jersey Boys,503,Mean Mountain,44
+20150322,Philly Hooligans,367,Mean Mountain,93
+20150328,Misfits,546,Wreckingballs,15
+20150328,Toronto Men's,90,Jersey Boys,411
+20150404,Mass Maelstrom,350,Quadfathers,22
+20150404,Kornstalkers,247,Big O,142
+20150411,Misfits,410,Battering Rams,36
+20150411,Tampa Bay,87,Battering Rams,149
+20150411,Kornstalkers,109,Twin Cities Terrors,184
+20150418,Philly Hooligans,125,Wreckingballs,150
+20150418,Manchester (Men's),144,Barrow,128
+20150418,Mont Royals,150,Jersey Boys,141
+20150418,Toronto Men's,86,Quadfathers,357
+20150419,Shock Exchange,382,Mont Royals,70
+20150425,Tyne & Fear,34,Silures,323
+20150425,Race City,353,Cap City Hooligans,42
+20150429,Quad Guards,202,Manchester (Men's),130
+20150430,Tyne & Fear,115,Quad Guards,215
+20150501,Bridgetown,348,Reservoir Dogs,88
+20150501,Puget Sound,337,Rattleskates,96
+20150501,Ground Control,411,Dreadnaughts,131
+20150501,Austin Anarchy,148,Lane County,162
+20150501,Austin Anarchy,343,Dreadnaughts,110
+20150502,Bridgetown,129,Puget Sound,171
+20150502,Ground Control,399,Salem Men's,127
+20150502,Ground Control,351,Austin Anarchy,221
+20150502,Reservoir Dogs,154,Drive-By,179
+20150502,Drive-By,218,Lane County,136
+20150502,Twin Cities Terrors,311,Big O,34
+20150502,Rock City Riot,155,Bomberz,164
+20150503,Bridgetown,327,Rattleskates,138
+20150503,Puget Sound,387,Drive-By,51
+20150503,Misfits,269,Tampa Bay,72
+20150503,Philly Hooligans,122,Quadfathers,181
+20150503,Quad Guards,149,Silures,154
+20150503,Reservoir Dogs,161,Rattleskates,226
+20150503,Wreckingballs,200,Collision,145
+20150503,Lane County,257,Dreadnaughts,76
+20150509,Aftershocks,217,Ground Control,161
+20150509,Aftershocks,232,Uinta,154
+20150509,Ground Control,161,Uinta,192
+20150515,Texas Men's,499,Rock City Riot,20
+20150515,Misfits,217,Race City,107
+20150515,Kornstalkers,142,Battering Rams,192
+20150515,Jersey Boys,243,Bruise Brothers,72
+20150516,St. Louis GateKeepers,163,Texas Men's,115
+20150516,St. Louis GateKeepers,511,Battering Rams,24
+20150516,Your Mom,197,Misfits,89
+20150516,Race City,285,Kornstalkers,73
+20150516,Race City,201,Jersey Boys,102
+20150516,Wreckingballs,186,Rock City Riot,159
+20150516,Rock City Riot,291,Bruise Brothers,74
+20150517,St. Louis GateKeepers,608,Wreckingballs,15
+20150517,Your Mom,301,Race City,37
+20150517,Your Mom,430,Jersey Boys,18
+20150517,Texas Men's,605,Wreckingballs,20
+20150517,Misfits,471,Battering Rams,35
+20150517,Kornstalkers,383,Bruise Brothers,66
+20150523,Philly Hooligans,132,Trauma Authority,208
+20150523,Toronto Men's,124,Quadfathers,179
+20150523,Blitzdkrieg,141,Bruise Brothers,243
+20150529,Reservoir Dogs,305,Dreadnaughts,59
+20150530,Vancouver Murder,608,Dreadnaughts,12
+20150531,Vancouver Murder,329,Reservoir Dogs,84
+20150605,St. Louis GateKeepers,443,Twin Cities Terrors,73
+20150605,Texas Men's,186,Puget Sound,98
+20150605,Blitzdkrieg,136,Cap City Hooligans,244
+20150606,St. Louis GateKeepers,222,Puget Sound,66
+20150606,Texas Men's,342,Twin Cities Terrors,67
+20150606,Tyne & Fear,204,Rolling Thunder,56
+20150606,Bomberz,182,Cap City Hooligans,185
+20150606,Quadfathers,344,Mean Mountain,50
+20150607,St. Louis GateKeepers,165,Texas Men's,175
+20150607,Puget Sound,283,Twin Cities Terrors,73
+20150607,Blitzdkrieg,186,Bomberz,318
+20150613,Bridgetown,223,Vancouver Murder,122
+20150613,Mass Maelstrom,167,Mont Royals,124
+20150613,Race City,169,Battering Rams,146
+20150613,Collision,212,Harm City,124
+20150613,Oklahoma Men's,155,Big O,122
+20150613,Death Quads,77,Quadfathers,196
+20150614,Misfits,745,Hitmen,0
+20150619,Shock Exchange,683,Philly Hooligans,7
+20150620,Mass Maelstrom,244,Jersey Boys,63
+20150620,Reservoir Dogs,390,Dreadnaughts,35
+20150621,Shock Exchange,312,Mass Maelstrom,106
+20150621,Philly Hooligans,210,Jersey Boys,180
+20150621,Barrow,358,Quads of War,99
+20150627,Rolling Thunder,176,Quad Guards,124
+20150627,Tampa Bay,269,Harm City,97
+20150627,Tampa Bay,278,Tulsa Derby Militia,56
+20150627,Mont Royals,240,Toronto Men's,132
+20150627,Kornstalkers,77,Twin Cities Terrors,373
+20150627,Battering Rams,147,Trauma Authority,221
+20150627,Twin Cities Terrors,163,Rock City Riot,114
+20150627,Austin Anarchy,174,Oklahoma Men's,173
+20150627,Rock City Riot,212,Bomberz,80
+20150627,Blitzdkrieg,292,Harm City,92
+20150628,Tampa Bay,239,Blitzdkrieg,113
+20150628,Kornstalkers,237,Bomberz,170
+20150628,Kornstalkers,121,Rock City Riot,187
+20150628,Twin Cities Terrors,394,Bomberz,66
+20150628,Blitzdkrieg,128,Tulsa Derby Militia,262
+20150704,Mont Royals,198,Slaughter Squad,95
+20150704,Toronto Men's,222,Bruise Brothers,130
+20150711,Mass Maelstrom,244,Jersey Boys,54
+20150711,Trauma Authority,335,Mean Mountain,77
+20150712,Bruise Brothers,130,Cap City Hooligans,128
+20150718,Your Mom,308,Twin Cities Terrors,75
+20150718,Southern Discomfort,295,Barrow,36
+20150718,Tyne & Fear,264,Panam,102
+20150718,Rolling Thunder,197,Quad Guards,133
+20150718,Quad Guards,227,Barrow,149
+20150718,Silures,173,Manchester (Men's),158
+20150718,Manchester (Men's),208,Panam,158
+20150718,Toronto Men's,113,Slaughter Squad,184
+20150719,Southern Discomfort,211,Tyne & Fear,139
+20150719,Southern Discomfort,355,Rolling Thunder,57
+20150719,Tyne & Fear,187,Silures,176
+20150719,Rolling Thunder,166,Silures,222
+20150719,Quad Guards,144,Manchester (Men's),112
+20150719,Panam,223,Barrow,131
+20150725,Trauma Authority,107,Quadfathers,236
+20150801,Mont Royals,228,Trauma Authority,126
+20150805,Shock Exchange,285,Tyne & Fear,58
+20150808,St. Louis GateKeepers,222,Misfits,116
+20150808,Tyne & Fear,257,Quadfathers,96
+20150808,Philly Hooligans,142,Quadfathers,97
+20150808,Philly Hooligans,81,Race City,177
+20150808,Mont Royals,245,Jersey Boys,108
+20150809,St. Louis GateKeepers,422,Tampa Bay,21
+20150809,Shock Exchange,326,Tyne & Fear,104
+20150809,Shock Exchange,324,Mont Royals,44
+20150809,Tyne & Fear,291,Race City,80
+20150809,Philly Hooligans,134,Jersey Boys,215
+20150809,Mont Royals,174,Race City,187
+20150815,St. Louis GateKeepers,214,Texas Men's,102
+20150815,St. Louis GateKeepers,466,Twin Cities Terrors,33
+20150815,Bridgetown,115,Texas Men's,212
+20150815,Puget Sound,371,Vancouver Murder,40
+20150815,Tyne & Fear,199,Mass Maelstrom,132
+20150815,Ground Control,249,Uinta,241
+20150816,St. Louis GateKeepers,255,Bridgetown,63
+20150816,Bridgetown,285,Twin Cities Terrors,54
+20150816,Texas Men's,356,Twin Cities Terrors,82
+20150816,Big O,142,Tulsa Derby Militia,201
+20150829,St. Louis GateKeepers,452,Mass Maelstrom,32
+20150829,Your Mom,384,Ground Control,52
+20150829,Texas Men's,400,Austin Anarchy,85
+20150829,Race City,171,Rock City Riot,157
+20150830,Mass Maelstrom,192,Race City,137
+20150830,Rock City Riot,359,Cap City Hooligans,65
+20150905,Your Mom,430,Big O,21
+20150905,Barrow,188,Inhuman,110
+20150905,Collision,265,Harm City,92
+20150905,Trauma Authority,415,Dirty Dozen,23
+20150912,Tampa Bay,187,Wreckingballs,83
+20151003,Oklahoma Men's,177,Tulsa Derby Militia,193
+20151003,Death Quads,191,Mean Mountain,165
+20151003,Bruise Brothers,150,Cap City Hooligans,121
+20151010,Ground Control,243,Big O,239
+20151010,Ground Control,91,Kornstalkers,251
+20151017,St. Louis GateKeepers,229,Bridgetown,85
+20151017,Your Mom,252,Misfits,118
+20151017,Southern Discomfort,128,Shock Exchange,133
+20151017,Bridgetown,316,Twin Cities Terrors,33
+20151017,Texas Men's,200,Puget Sound,113
+20151017,Misfits,209,Aftershocks,181
+20151018,St. Louis GateKeepers,188,Your Mom,121
+20151018,St. Louis GateKeepers,153,Shock Exchange,105
+20151018,Your Mom,219,Texas Men's,186
+20151018,Southern Discomfort,93,Puget Sound,202
+20151018,Texas Men's,176,Shock Exchange,170
+20151018,Aftershocks,151,Twin Cities Terrors,185
+20151114,Kornstalkers,168,Rock City Riot,117
+20151121,Vancouver Murder,242,Reservoir Dogs,181
+20151121,Reservoir Dogs,207,Lane County,190
+20151122,Vancouver Murder,187,Lane County,129
+20160128,Quad Guards,159,Panam,162
+20160227,Texas Men's,395,Austin Anarchy,32
+20160227,Tyne & Fear,284,Barrow,96
+20160227,Rolling Thunder,104,Silures,191
+20160227,Manchester (Men's),196,Barrow,125
+20160305,Mass Maelstrom,470,Casco Bay,21
+20160305,Twin Cities Terrors,217,Rock City Riot,85
+20160319,Texas Men's,633,Rattleskates,27
+20160319,Philly Hooligans,237,Collision,131
+20160319,Mont Royals,296,Collision,95
+20160319,Blitzdkrieg,247,Bruise Brothers,142
+20160320,Philly Hooligans,138,Mont Royals,206
+20160320,Race City,252,Battering Rams,116
+20160320,Austin Anarchy,224,Rattleskates,145
+20160326,Kornstalkers,213,Big O,100
+20160326,Inhuman,356,Brollers,55
+20160402,Lane County,179,Salem Men's,145
+20160409,Southern Discomfort,263,Rolling Thunder,41
+20160409,Silures,110,Manchester (Men's),157
+20160409,Kornstalkers,119,Twin Cities Terrors,179
+20160416,Mont Royals,208,Toronto Men's,126
+20160416,Kornstalkers,183,Rock City Riot,119
+20160416,Battering Rams,327,Cap City Hooligans,104
+20160416,Austin Anarchy,232,Oklahoma Men's,108
+20160428,Bridgetown,245,Aftershocks,82
+20160429,St. Louis GateKeepers,240,Puget Sound,75
+20160429,Bridgetown,122,Texas Men's,216
+20160429,Vancouver Murder,322,Lane County,42
+20160429,Aftershocks,319,Twin Cities Terrors,178
+20160430,St. Louis GateKeepers,227,Bridgetown,119
+20160430,Texas Men's,282,Aftershocks,213
+20160430,Puget Sound,346,Ground Control,90
+20160430,Vancouver Murder,294,Twin Cities Terrors,73
+20160430,Misfits,350,Wreckingballs,36
+20160430,Tyne & Fear,151,Manchester (Men's),89
+20160430,Tyne & Fear,114,Silures,220
+20160430,Philly Hooligans,472,Quadfathers,51
+20160430,Ground Control,311,Lane County,193
+20160430,Toronto Men's,190,Bruise Brothers,129
+20160501,St. Louis GateKeepers,377,Aftershocks,60
+20160501,Texas Men's,278,Puget Sound,75
+20160501,Vancouver Murder,312,Ground Control,133
+20160501,Twin Cities Terrors,271,Lane County,130
+20160507,Mont Royals,181,Slaughter Squad,70
+20160507,Harm City,129,Cleveland Men's,190
+20160514,Toronto Men's,153,Trauma Authority,190
+20160515,Toronto Men's,271,Quadfathers,69
+20160516,Quad Guards,214,Panam,159
+20160521,Shock Exchange,279,Mass Maelstrom,92
+20160521,Shock Exchange,494,Trauma Authority,30
+20160521,Philly Hooligans,418,Casco Bay,47
+20160521,Philly Hooligans,337,Collision,72
+20160521,Mont Royals,277,Collision,78
+20160521,Mont Royals,402,Casco Bay,95
+20160521,Kornstalkers,308,Big O,135
+20160521,Austin Anarchy,237,New Orleans Brass,89
+20160522,Philly Hooligans,288,Trauma Authority,177
+20160522,Mass Maelstrom,484,Casco Bay,55
+20160522,Mass Maelstrom,356,Collision,64
+20160522,Austin Anarchy,214,Wreckingballs,187
+20160522,Wreckingballs,191,New Orleans Brass,122
+20160522,Collision,240,Trauma Authority,182
+20160528,Southern Discomfort,410,Silures,57
+20160528,Southern Discomfort,393,Tyne & Fear,65
+20160528,Rolling Thunder,168,Manchester (Men's),100
+20160528,Toronto Men's,219,Slaughter Squad,150
+20160603,St. Louis GateKeepers,526,Drive-By,14
+20160603,Texas Men's,405,Twin Cities Terrors,52
+20160603,Rock City Riot,270,Blitzdkrieg,121
+20160604,St. Louis GateKeepers,298,Texas Men's,98
+20160604,Drive-By,222,Rock City Riot,139
+20160604,Twin Cities Terrors,215,Blitzdkrieg,119
+20160605,St. Louis GateKeepers,425,Twin Cities Terrors,58
+20160605,Texas Men's,443,Drive-By,27
+20160605,Texas Men's,462,Rock City Riot,60
+20160605,Drive-By,216,Blitzdkrieg,155
+20160610,Ground Control,266,Collision,133
+20160610,Reservoir Dogs,325,Bomberz,98
+20160610,Kornstalkers,177,Collision,197
+20160610,Uinta,142,Bomberz,155
+20160610,Quadfathers,189,Harm City,126
+20160611,Ground Control,184,Kornstalkers,97
+20160611,Reservoir Dogs,317,Uinta,131
+20160611,Drive-By,228,Rattleskates,103
+20160611,Quadfathers,184,Cleveland Men's,108
+20160611,Harm City,153,Cleveland Men's,110
+20160612,Aftershocks,449,Rattleskates,41
+20160612,Ground Control,237,Reservoir Dogs,141
+20160612,Ground Control,356,Bomberz,106
+20160612,Reservoir Dogs,204,Collision,186
+20160612,Harm City,191,Cleveland Men's,157
+20160617,Mass Maelstrom,214,Mont Royals,106
+20160618,Your Mom,365,Twin Cities Terrors,39
+20160618,Philly Hooligans,501,Jersey Boys,52
+20160618,Mont Royals,569,Jersey Boys,29
+20160618,Inhuman,249,Quads of War,123
+20160619,Tyne & Fear,140,Rolling Thunder,98
+20160619,Philly Hooligans,151,Mass Maelstrom,191
+20160619,Silures,225,Barrow,150
+20160624,St. Louis GateKeepers,146,Shock Exchange,111
+20160624,Puget Sound,269,Misfits,122
+20160624,Ground Control,265,Twin Cities Terrors,126
+20160624,Tampa Bay,398,New Orleans Brass,28
+20160624,Race City,366,Harm City,42
+20160624,Austin Anarchy,213,Tulsa Derby Militia,68
+20160624,Oklahoma Men's,220,Cap City Hooligans,91
+20160625,St. Louis GateKeepers,327,Misfits,36
+20160625,Shock Exchange,339,Ground Control,73
+20160625,Puget Sound,381,Twin Cities Terrors,46
+20160625,Tampa Bay,174,Race City,88
+20160625,Tampa Bay,203,Austin Anarchy,100
+20160625,Race City,300,Oklahoma Men's,67
+20160625,Austin Anarchy,220,Cap City Hooligans,118
+20160625,Oklahoma Men's,298,Tulsa Derby Militia,100
+20160625,New Orleans Brass,145,Tulsa Derby Militia,183
+20160625,Harm City,126,Cap City Hooligans,194
+20160626,St. Louis GateKeepers,386,Ground Control,45
+20160626,Shock Exchange,245,Puget Sound,98
+20160626,Misfits,363,Twin Cities Terrors,31
+20160626,Tampa Bay,176,Race City,150
+20160626,Race City,199,Austin Anarchy,111
+20160626,Austin Anarchy,151,Oklahoma Men's,139
+20160709,Race City,370,Bruise Brothers,59
+20160719,Vancouver Murder,223,ThunderQuads,81
+20160719,ThunderQuads,258,Reservoir Dogs,95
+20160723,Battering Rams,295,Cleveland Men's,64
+20160724,Bruise Brothers,147,Cap City Hooligans,154
+20160730,Puget Sound,312,ThunderQuads,102
+20160806,Race City,132,Wreckingballs,117
+20160807,Cap City Hooligans,256,Detroit Riot,108
+20160813,Your Mom,297,Twin Cities Terrors,23
+20160813,Your Mom,484,Bomberz,55
+20160813,Vancouver Murder,219,Philly Hooligans,105
+20160813,Vancouver Murder,361,Slaughter Squad,13
+20160813,Philly Hooligans,318,Slaughter Squad,48
+20160813,Mont Royals,159,Reservoir Dogs,127
+20160813,Mont Royals,164,Toronto Men's,160
+20160813,Reservoir Dogs,219,Toronto Men's,144
+20160814,Philly Hooligans,226,Mont Royals,105
+20160814,Philly Hooligans,235,Reservoir Dogs,150
+20160814,Mont Royals,240,Toronto Men's,133
+20160814,Toronto Men's,243,Slaughter Squad,117
+20160814,Twin Cities Terrors,302,Bomberz,103
+20160820,Southern Discomfort,370,Panam,29
+20160820,Bridgetown,263,Mass Maelstrom,54
+20160820,Bridgetown,152,Shock Exchange,107
+20160820,Wreckingballs,164,Collision,154
+20160821,Bridgetown,205,Philly Hooligans,108
+20160827,Tyne & Fear,463,Inhuman,47
+20160827,Kornstalkers,281,Bomberz,86
+20160827,Harm City,263,Cleveland Men's,123
+20160828,Ground Control,429,Tulsa Derby Militia,27
+20160910,Bruise Brothers,189,Cap City Hooligans,141
+20160924,Your Mom,522,Kornstalkers,20
+20160924,Your Mom,358,Ground Control,66
+20160924,Ground Control,267,Kornstalkers,167
+20161012,Southern Discomfort,423,Austin Anarchy,75
+20161015,St. Louis GateKeepers,250,Misfits,54
+20161015,Your Mom,201,Southern Discomfort,105
+20161015,Southern Discomfort,216,Vancouver Murder,80
+20161015,Bridgetown,167,Shock Exchange,100
+20161015,Texas Men's,260,Puget Sound,123
+20161015,Misfits,218,Aftershocks,169
+20161016,St. Louis GateKeepers,165,Your Mom,129
+20161016,St. Louis GateKeepers,132,Bridgetown,87
+20161016,Your Mom,214,Texas Men's,152
+20161016,Bridgetown,143,Texas Men's,150
+20161016,Shock Exchange,180,Puget Sound,126
+20161016,Vancouver Murder,232,Aftershocks,138
+20161112,Southern Discomfort,443,Tampere Bros,25
+20161112,Tyne & Fear,226,Panam,108
+20161112,Rolling Thunder,318,Manneken Beasts,48
+20161112,Tampere Bros,230,Gothenburg Mens,72
+20161113,Southern Discomfort,241,Tyne & Fear,80
+20161113,Southern Discomfort,285,Rolling Thunder,50
+20161113,Tyne & Fear,247,Silures,158
+20161113,Rolling Thunder,217,Silures,140
+20161113,Panam,263,Manneken Beasts,133
+20161127,Victoria Men's Roller Derby,303,Sydney City SMASH,91
+20161210,Rock City Riot,140,Bomberz,212
+20161218,Quad Guards,121,Panam,90
+20161218,Quad Guards,276,Manneken Beasts,79
+20161218,Panam,265,Manneken Beasts,126
+20170204,Philly Hooligans,259,Toronto Men's,112
+20170205,Aftershocks,419,Drive-By,69
+20170211,Quad Guards,200,Manchester (Men's),75
+20170211,Austin Anarchy,429,New Orleans Brass,34
+20170211,Gothenburg Mens,211,Brollers,107
+20170212,Quad Guards,247,Panam,88
+20170212,Manchester (Men's),141,Panam,140
+20170218,Drive-By,203,Lane County,171
+20170218,Wreckingballs,335,Casco Bay,90
+20170218,Collision,309,Cleveland Men's,44
+20170218,Wreckingballs,381,Cleveland Men's,35
+20170218,Collision,292,Casco Bay,93
+20170219,Casco Bay,205,Cleveland Men's,157
+20170219,Collision,86,Wreckingballs,215
+20170225,Quad Guards,154,Manchester (Men's),153
+20170225,Quad Guards,286,Silures,82
+20170226,Skaters Grim,110,Aftershocks,301
+20170304,Tyne & Fear,209,Manchester (Men's),204
+20170304,Shock Exchange,149,Misfits,140
+20170304,Aftershocks,312,Philly Hooligans,104
+20170304,Misfits,203,Mass Maelstrom,107
+20170304,Shock Exchange,191,Philly Hooligans,121
+20170304,New Orleans Brass,120,Atlanta Men's,198
+20170305,Mass Maelstrom,97,Aftershocks,314
+20170305,Misfits,207,Philly Hooligans,129
+20170305,Mass Maelstrom,438,Flour City,22
+20170311,Victoria Men's Roller Derby,213,Sydney City SMASH,130
+20170318,Detroit Riot,364,Cleveland Men's,128
+20170318,Oklahoma Men's,123,Austin Anarchy,157
+20170318,Casco Bay,216,Trauma Authority,64
+20170318,Battering Rams,236,Cap City Hooligans,99
+20170318,Tampa Bay,412,New Orleans Brass,34
+20170319,Austin Anarchy,110,Texas Men's,216
+20170408,Vancouver Murder,182,Puget Sound,130
+20170408,Drive-By,234,Skaters Grim,178
+20170408,Drive-By,213,Wheels of Mayhem,151
+20170408,Wheels of Mayhem,130,Skaters Grim,194
+20170408,Panam,257,Moustaches,43
+20170408,Race City,16,St. Louis GateKeepers,467
+20170415,Bruise Brothers,153,Blitzdkrieg,166
+20170415,Wirral (Men's),101,Manchester (Men's),248
+20170422,Carnage,96,Victoria Men's Roller Derby,264
+20170422,Scartel,51,ThunderQuads,283
+20170422,Carnage,103,Sydney City SMASH,290
+20170422,Victoria Men's Roller Derby,310,Scartel,41
+20170422,ThunderQuads,314,Sydney City SMASH,51
+20170422,Twin Cities Terrors,65,Austin Anarchy,219
+20170422,Oklahoma Men's,433,New Orleans Brass,23
+20170423,Victoria Men's Roller Derby,250,Sydney City SMASH,73
+20170423,ThunderQuads,408,Carnage,81
+20170423,Sydney City SMASH,124,Scartel,151
+20170423,ThunderQuads,108,Victoria Men's Roller Derby,190
+20170423,Scartel,166,Carnage,143
+20170423,Manchester (Men's),232,Manneken Beasts,72
+20170423,Manchester (Men's),281,Manneken Beasts,81
+20170423,Twin Cities Terrors,410,New Orleans Brass,54
+20170423,Twin Cities Terrors,132,Oklahoma Men's,219
+20170428,Norsemen,187,Collision,152
+20170428,Battering Rams,136,Drive-By,135
+20170429,Battering Rams,138,Norsemen,214
+20170429,Collision,144,Drive-By,150
+20170429,Brummies,224,Gothenburg Mens,114
+20170429,Detroit Riot,61,Toronto Men's,272
+20170429,Trauma Authority,171,Detroit Riot,174
+20170429,Toronto Men's,354,Trauma Authority,43
+20170429,Wreckingballs,116,Race City,292
+20170430,Battering Rams,162,Collision,134
+20170430,Norsemen,180,Drive-By,86
+20170504,Victoria Men's Roller Derby,237,Lane County,135
+20170505,Reservoir Dogs,36,Shock Exchange,439
+20170505,Vancouver Murder,108,Bridgetown,273
+20170505,Puget Sound,366,Victoria Men's Roller Derby,56
+20170505,Reservoir Dogs,165,Lane County,173
+20170505,Wheels of Mayhem,11,St. Louis GateKeepers,437
+20170506,Reservoir Dogs,132,Victoria Men's Roller Derby,194
+20170506,Bridgetown,237,Shock Exchange,53
+20170506,Vancouver Murder,274,Victoria Men's Roller Derby,80
+20170506,Puget Sound,104,St. Louis GateKeepers,283
+20170506,Wheels of Mayhem,245,Lane County,111
+20170506,Brummies,31,Tyne & Fear,423
+20170506,Inhuman,11,Rolling Thunder,574
+20170507,Bridgetown,132,St. Louis GateKeepers,134
+20170507,Wheels of Mayhem,43,Puget Sound,342
+20170507,Vancouver Murder,108,Shock Exchange,152
+20170508,Panam,98,Quad Guards,199
+20170513,Philly Hooligans,162,Mass Maelstrom,200
+20170513,Casco Bay,109,Toronto Men's,269
+20170513,Tampa Bay,111,Mass Maelstrom,153
+20170513,Collision,75,Philly Hooligans,271
+20170513,Collision,91,Tampa Bay,157
+20170513,Skaters Grim,91,Drive-By,199
+20170514,Collision,155,Casco Bay,163
+20170514,Tampa Bay,126,Toronto Men's,146
+20170514,Casco Bay,86,Philly Hooligans,504
+20170514,Toronto Men's,84,Mass Maelstrom,275
+20170520,Rolling Thunder,62,Southern Discomfort,296
+20170520,Cleveland Men's,217,Blue Streaks (M),134
+20170520,Twin Cities Terrors,154,Race City,161
+20170520,Twin Cities Terrors,337,Blitzdkrieg,97
+20170520,Race City,350,Blitzdkrieg,39
+20170527,Puget Sound,196,Vancouver Murder,119
+20170527,Bridgetown,178,Aftershocks,93
+20170528,Aftershocks,303,Vancouver Murder,102
+20170528,Puget Sound,93,Bridgetown,223
+20170528,Vancouver Murder,207,Ground Control,180
+20170603,Shock Exchange,193,Mass Maelstrom,67
+20170603,Atlanta Men's,177,Harm City,159
+20170603,Manchester (Men's),396,Brummies,43
+20170603,Bruise Brothers,39,Race City,457
+20170609,Harm City,272,Cleveland Men's,90
+20170609,Blue Streaks (M),143,Flour City,301
+20170610,Collision,68,Ground Control,326
+20170610,Harm City,206,Blue Streaks (M),122
+20170610,Collision,137,Reservoir Dogs,225
+20170610,Flour City,172,Cleveland Men's,121
+20170611,Collision,139,Reservoir Dogs,285
+20170611,Harm City,190,Flour City,137
+20170611,Ground Control,278,Reservoir Dogs,117
+20170616,Drive-By,125,Oklahoma Men's,208
+20170616,Oklahoma Men's,123,Race City,97
+20170617,Toronto Men's,202,Mont Royals,190
+20170617,Drive-By,170,Race City,129
+20170617,Wreckingballs,122,Austin Anarchy,243
+20170617,Oklahoma Men's,181,Austin Anarchy,153
+20170617,Casco Bay,317,Cleveland Men's,61
+20170617,Casco Bay,229,Flour City,231
+20170618,Austin Anarchy,159,Drive-By,125
+20170623,Sydney City SMASH,92,Ground Control,331
+20170623,St. Louis GateKeepers,266,Misfits,68
+20170624,Sydney City SMASH,45,Misfits,315
+20170624,St. Louis GateKeepers,411,Ground Control,41
+20170624,Misfits,297,Twin Cities Terrors,103
+20170624,Philly Hooligans,201,Mass Maelstrom,156
+20170624,Southern Discomfort,218,Quad Guards,170
+20170625,Sydney City SMASH,66,Twin Cities Terrors,274
+20170625,Ground Control,119,Misfits,271
+20170625,St. Louis GateKeepers,423,Twin Cities Terrors,32
+20170625,Manchester (Men's),599,Inhuman,39
+20170626,St. Louis GateKeepers,411,Sydney City SMASH,40
+20170629,Drive-By,151,Sydney City SMASH,143
+20170708,Harm City,152,Detroit Riot,108
+20170708,Cleveland Men's,128,Detroit Riot,155
+20170708,Harm City,235,Cleveland Men's,104
+20170715,Sydney City SMASH,273,Carnage,99
+20170715,Trauma Authority,18,Mont Royals,531
+20170715,Wheels of Mayhem,250,Skaters Grim,97
+20170722,Norsemen,80,Twin Cities Terrors,293
+20170722,Bruise Brothers,113,Blitzdkrieg,222
+20170722,Battering Rams,382,Cleveland Men's,23
+20170722,Toronto Men's,282,Battering Rams,82
+20170722,Bruise Brothers,53,Twin Cities Terrors,338
+20170722,Toronto Men's,436,Cleveland Men's,21
+20170729,Panam,61,Manchester (Men's),251
+20170729,Rolling Thunder,97,Quad Guards,221
+20170729,Manchester (Men's),250,Tyne & Fear,167
+20170729,Panam,63,Quad Guards,249
+20170729,Rolling Thunder,218,Tyne & Fear,131
+20170729,Blue Streaks (M),128,Flour City,154
+20170730,Rolling Thunder,246,Panam,91
+20170730,Quad Guards,162,Manchester (Men's),151
+20170730,Tyne & Fear,240,Panam,91
+20170730,Manchester (Men's),152,Rolling Thunder,126
+20170730,Tyne & Fear,109,Quad Guards,196
+20170812,Austin Anarchy,146,Race City,149
+20170812,Norsemen,65,Ground Control,276
+20170812,Twin Cities Terrors,132,Mont Royals,156
+20170812,Race City,132,Philly Hooligans,204
+20170812,Mont Royals,138,Ground Control,172
+20170812,Norsemen,75,Twin Cities Terrors,237
+20170812,Southern Discomfort,317,Tyne & Fear,92
+20170813,Austin Anarchy,226,Mont Royals,122
+20170813,Twin Cities Terrors,132,Race City,213
+20170813,Norsemen,101,Mont Royals,205
+20170813,Austin Anarchy,125,Philly Hooligans,143
+20170813,Race City,199,Ground Control,122
