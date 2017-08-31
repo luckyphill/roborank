@@ -499,7 +499,7 @@ ranking = Ranking(20160430,20170430,'../Data/MRDAallgames.csv','../Data/hiatus.c
 ranking.regression_ranking()
 ranking.anchor_regions(False)
 ranking.print_rankings(True)
-ranking2 = Ranking(20160815,20170815,'../Data/MRDAallgames.csv','../Data/hiatus.csv','../Data/disbanded.csv')
+ranking2 = Ranking(20160830,20170830,'../Data/MRDAallgames.csv','../Data/hiatus.csv','../Data/disbanded.csv')
 #ranking2.add_new_game([20160814,"Vancouver Murder",0,"Reservoir Dogs",100])
 #ranking2.add_note("Contains the Vancouver - Reservoir Dogs forfeit")
 ranking2.regression_ranking()
