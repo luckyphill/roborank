@@ -4,6 +4,8 @@ import copy
 from scipy import log, cosh, tanh, exp, floor
 from scipy.optimize import fsolve
 import datetime as dt
+import matplotlib.pyplot as plt
+import numpy as np
 #from future import print_function
 
 day = dt.timedelta(1)
@@ -114,7 +116,7 @@ class Game:
 		self.DOS = float(self.home_score - self.away_score)/float(self.home_score + self.away_score)
 
 	def __str__(self):
-		return "%s  %s  %3d  || %s  %3d" %(self.date, self.home_team.ljust(33), self.home_score, self.away_team.ljust(33), self.away_score)
+		return "%s  %s  %3d  || %s  %3d  %.3f" %(self.date, self.home_team.ljust(33), self.home_score, self.away_team.ljust(33), self.away_score, self.DOS)
 
 	def weight(self,window_start, window_end):
 		diff = window_end - self.date
@@ -447,9 +449,9 @@ class Ranking:
 		e_DOS = -1 + 2/(1 + exp((away.power - home.power)/scaling_factor))
 		ratio = (1 - e_DOS)/(e_DOS + 1) #away_score = home_score * ratio
 		if ratio > 1: #away is expected to win
-			print "%s is predicted to beat %s by a factor of %.1f" %(away_team,home_team, ratio)
+			print "%s is predicted to beat %s by a factor of %.1f with as DOS of %.3f" %(away_team,home_team, ratio, abs(e_DOS))
 		elif ratio <1:
-			print "%s is predicted to beat %s by a factor of %.1f" %(home_team,away_team, 1/ratio)
+			print "%s is predicted to beat %s by a factor of %.1f with as DOS of %.3f" %(home_team, away_team, 1/ratio, abs(e_DOS))
 		elif ratio == 1:
 			print "WTF? there are no draws in Derby!"
 
@@ -488,27 +490,32 @@ class Ranking:
 	def add_note(self, note):
 		self.notes = note
 
+	def plot_team(self, team):
+		opponent_powers = []
+		game_DOS = []
+		game_list = self.teams[team].games
+		for game in game_list:
+			if self.teams[team].name == game.home_team:
+				opponent_powers.append(self.teams[game.away_team].power)
+				game_DOS.append(game.DOS)
+			else:
+				opponent_powers.append(self.teams[game.home_team].power)
+				game_DOS.append(-game.DOS)
+
+		def f(t):
+			return tanh((self.teams[team].power - t)/200)
+		powers = np.arange(300, 1200, 1)
+		title = team + " predicted DOS with actual game data\nStrength = %.1f" %(self.teams[team].power)
+		plt.title(title)
+		plt.plot(opponent_powers,game_DOS,'r*', powers, f(powers), 'b')
+		plt.show()
+
+		
+
 	def __str__(self):
 		#number of teams includes inactive, disbanded and hiatus teams that are in the teams list
 		return "Ranking period: %s - %s\n%d games\n%d teams\nNotes: %s" %(str(self.start), str(self.end),len(self.games), len(self.teams),self.notes)
 
-print "\nScript written assuming Python 2.7. If you experience errors, you may be running a different version or be missing the required packages."
-print "Written by Phillip Brown (Lucky Phill) for the MRDA"
-print "Contact: pbrown.mwerhun@gmail.com"
-ranking = Ranking(20160430,20170430,'../Data/MRDAallgames.csv','../Data/hiatus.csv','../Data/disbanded.csv')
-ranking.regression_ranking()
-ranking.anchor_regions(False)
-ranking.print_rankings(True)
-ranking2 = Ranking(20160830,20170830,'../Data/MRDAallgames.csv','../Data/hiatus.csv','../Data/disbanded.csv')
-#ranking2.add_new_game([20160814,"Vancouver Murder",0,"Reservoir Dogs",100])
-#ranking2.add_note("Contains the Vancouver - Reservoir Dogs forfeit")
-ranking2.regression_ranking()
-ranking2.anchor_regions(False)
-ranking2.print_rankings(True)
-
-ranking2.compare_rankings(ranking)
-
-#ranking.expected_result("St. Louis GateKeepers","Philly Hooligans")
 
 
 
