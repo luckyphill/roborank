@@ -6,7 +6,9 @@ from scipy.optimize import fsolve
 import datetime as dt
 import matplotlib.pyplot as plt
 import numpy as np
-#from future import print_function
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+#shuts up the warning when colour and point size are given to plot as vectors - this occurs because python and numpy can't agree on things
 
 day = dt.timedelta(1)
 
@@ -26,7 +28,7 @@ def weight(game_date,window_start, window_end):
 	months_ago = floor(12*diff.days/365)
 
 	#return (12-months_ago)/12 #linearly decay, month by month
-	#games within las 6 months are weighted 1, linear decay between 6 and 12 months, after 12 months weight is zero
+	#games within last 6 months are weighted 1, linear decay between 6 and 12 months, after 12 months weight is zero
 	if months_ago<6:
 		return 1
 	elif 6<=months_ago<=12:
@@ -120,7 +122,7 @@ class Game:
 
 	def weight(self,window_start, window_end):
 		diff = window_end - self.date
-		months_ago = floor(12*diff.days/365)
+		months_ago = floor(12*diff.days/365) #hence 364 day difference rounds down to 11 months
 
 		#return (12-months_ago)/12 #linearly decay, month by month
 		#games within las 6 months are weighted 1, linear decay between 6 and 12 months, after 12 months weight is zero
@@ -154,7 +156,7 @@ class Week:
 		return "%s - %s\n" %(self.start, self.end)
 
 class Ranking:
-	def __init__(self, start_date, end_date, games_file, hiatus_file = None, disbanded_file = None):
+	def __init__(self, start_date, end_date, games_file, teams_file = None, hiatus_file = None, disbanded_file = None):
 		self.start = str2dt(start_date)
 		self.end = str2dt(end_date)
 		self.weeks = []
@@ -167,7 +169,9 @@ class Ranking:
 		self.hiatus = []
 		self.load_games(games_file)
 		self.load_teams()
-		self.ranked_list = [] #a dictionary converted to a list of tuples. first item in tuple is team name, second item in tuple is the team object
+		self.ranked_list_full = [] #a dictionary converted to a list of tuples. first item in tuple is team name, second item in tuple is the team object
+		self.ranked_list_active = [] # a ranked list of only teams that meet minimum requirements
+		self.inactive = []
 		self.notes = "None"
 		if hiatus_file is not None:
 			self.load_hiatus_teams(hiatus_file)
@@ -241,7 +245,7 @@ class Ranking:
 		for week in self.weeks:
 			week.print_week()
 
-	def print_rankings(self, only_active_teams=False):
+	def print_rankings(self, only_active_teams=True):
 		print "\nRankings for period %s to %s" %(self.start, self.end)
 		if only_active_teams:
 			print "Only teams active this period are shown"
@@ -252,24 +256,20 @@ class Ranking:
 		no_games = []
 		inactive = []
 
-		for team in self.ranked_list:
-			if only_active_teams:
-				if team.is_active() and not team.hiatus and not team.disbanded:
-					print "%3d   %6.1f    %2d    %s" %(counter, team.power, team.num_games, team.name)
-					counter += 1
-				else:
-					if team.num_games == 0:
-						no_games.append(team.name)
-					elif not team.hiatus and not team.disbanded:
-						inactive.append(team.name)
-			elif not team.hiatus and not team.disbanded:
+		if only_active_teams:
+			for team in self.ranked_list_active:
+				print "%3d   %6.1f    %2d    %s" %(counter, team.power, team.num_games, team.name)
+				counter += 1
+		else:
+			for team in self.ranked_list_full:
 				print "%3d   %6.1f    %2d    %s" %(counter, team.power, team.num_games, team.name)
 				counter += 1
 
-		if inactive:
+		if self.inactive:
 			print "\nThe following teams played games, but did not meet minimum activity requirements:"
-			for team in inactive:
-				print team
+			for team in self.inactive:
+				if team.name not in self.hiatus:
+					print team
 
 		if no_games:
 			print "\nThe following teams played no games in the given period:"
@@ -279,14 +279,17 @@ class Ranking:
 		if self.hiatus:
 			print "\nThe following teams are not ranked because they are on hiatus:"
 			for team in self.hiatus:
-				if team in self.teams:
-					print team
+				print team
 
 		if self.disbanded:
+			count = 0
 			print "\nThe following teams have disbanded, but their game results are used where required:"
 			for team in self.disbanded:
 				if team in self.teams:
 					print team
+					count += 1
+			if count == 0:
+				print "'None'\n"
 
 	def determine_regions(self):
 		# used to determine regions
@@ -330,6 +333,39 @@ class Ranking:
 			return y
 		return reg_func
 
+	def create_ranking(self):
+		# the following line is whichever ranking methodology has been chosen
+		self.regression_ranking()
+
+		#sort the dictionary, then use list comprehension to only return the team object
+		self.ranked_list_full = [value for key,value in sorted(self.teams.items(), key=lambda x: x[1].power, reverse = True)]
+
+		#normalise the powers and fix separate regions
+		self.anchor_regions()
+
+		#remove hiatus, disbanded, and non-minimum-requirements teams and populate inactive list
+		for team in self.ranked_list_full:
+			if team.is_active() and not team.hiatus and not team.disbanded:
+				self.ranked_list_active.append(team)
+			else:
+				self.inactive.append(team)
+
+		output = 'ranking_' + str(self.start) + '_to_' + str(self.end) + '.csv'
+		with open(output, 'wb') as csvfile:
+			game_writer = csv.writer(csvfile, delimiter=',')
+			counter = 1
+			game_writer.writerow(["\nActive teams"])
+			for team in self.ranked_list_active:
+				team_data = [counter,team.power, team.num_games, team.name]
+				game_writer.writerow(team_data)
+				counter += 1
+			game_writer.writerow(["\nAll teams"])
+			counter = 1
+			for team in self.ranked_list_full:
+				team_data = [counter,team.power, team.num_games, team.name]
+				game_writer.writerow(team_data)
+				counter += 1
+		
 	def regression_ranking(self):
 		#this uses least squares regression to find the most appropriate power rating for each team
 		#it solves power ratings simulatenously and then uses them to rank the teams
@@ -343,10 +379,7 @@ class Ranking:
 		for team,i in zip(self.fixed_order,xrange(len(reg_result))):
 			self.teams[team].power  = copy.deepcopy(reg_result[i])
 
-		#sort the dictionary, then use list comprehension to only return the team object
-		self.ranked_list = [value for key,value in sorted(self.teams.items(), key=lambda x: x[1].power, reverse = True)]
-
-	def anchor_regions(self, only_active_teams=False):
+	def anchor_regions(self):
 		#if there are disconnected regions in the network of games
 		#this provides a means for giving the smaller regions a way to be subjectively anchored in
 		#the largest region. it uses the highest ranked team in the smaller region as the anchor
@@ -381,7 +414,7 @@ class Ranking:
 				if region_number>0:
 					print "These powers only show how this region structured. They do not reflect global power"
 					print "A subjective rating for this region is required."
-				for team in self.ranked_list:
+				for team in self.ranked_list_full:
 					if team.name in sublist:
 						if region_number>0:
 							self.teams[team.name].power -= adjustment
@@ -401,8 +434,8 @@ class Ranking:
 					for team in ranked_regions[i]:
 						self.teams[team].power += adjustment
 
-				self.ranked_list = [value for key,value in sorted(self.teams.items(), key=lambda x: x[1].power, reverse = True)]
-				self.print_rankings()
+				self.ranked_list_full = [value for key,value in sorted(self.teams.items(), key=lambda x: x[1].power, reverse = True)]
+				self.print_rankings(False)
 
 
 				print "\nAre you happy with these rankings?"
@@ -411,9 +444,6 @@ class Ranking:
 					satisfied = True
 				else:
 					adjust_to = []
-		
-			#prints the final result
-		#self.print_rankings(only_active_teams)
 
 	def load_hiatus_teams(self, hiatus_file):
 		#determine hiatus teams
@@ -449,9 +479,9 @@ class Ranking:
 		e_DOS = -1 + 2/(1 + exp((away.power - home.power)/scaling_factor))
 		ratio = (1 - e_DOS)/(e_DOS + 1) #away_score = home_score * ratio
 		if ratio > 1: #away is expected to win
-			print "%s is predicted to beat %s by a factor of %.1f with as DOS of %.3f" %(away_team,home_team, ratio, abs(e_DOS))
+			print "%s is predicted to beat %s by a factor of %.1f with a DOS of %.3f" %(away_team,home_team, ratio, abs(e_DOS))
 		elif ratio <1:
-			print "%s is predicted to beat %s by a factor of %.1f with as DOS of %.3f" %(home_team, away_team, 1/ratio, abs(e_DOS))
+			print "%s is predicted to beat %s by a factor of %.1f with a DOS of %.3f" %(home_team, away_team, 1/ratio, abs(e_DOS))
 		elif ratio == 1:
 			print "WTF? there are no draws in Derby!"
 
@@ -469,32 +499,63 @@ class Ranking:
 		print "and"
 		print previous_ranking
 
-		print "\nchg | rank | chg | power |games| team"
+
+		changes = {} #store team:[rank change, power change] or [in/out = (1/-1)]
+		
 		curr_rank = 1 #holds the rank position
 		r_change = 0 #rank change
 		p_change = 0.0 #power change
-		for team in self.ranked_list:
+		for team in self.ranked_list_full:
 			prev_rank = 1
-			for team_pr in previous_ranking.ranked_list:
+			for team_pr in previous_ranking.ranked_list_full:
 				if team.name == team_pr.name:
 					r_change = prev_rank - curr_rank
 					p_change = team.power - team_pr.power
+					changes[team.name] = [r_change, p_change] #catches teams in both current and previous rankings
+					break
 				prev_rank +=1
-			if r_change == 0:
-				print " - ",
-			else:
-				print "%3d" %(r_change),
-			print "%4d  %6.1f  %6.1f    %2d    %s" %(curr_rank, p_change, team.power, team.num_games, team.name)
+			if team.name not in changes:
+				changes[team.name] = ["*", "*"] #catches teams new to current rankings
 			curr_rank += 1
+		
+		for team_pr in previous_ranking.ranked_list_full:
+			if team_pr.name not in changes:
+				changes[team_pr.name] = [None,None] #catches teams that have dropped out of rankings
 
+		print "\nRank | +/- | Power |  +/-  | Games | Team"
+		counter = 1
+		for team in self.ranked_list_active:
+			if changes[team.name][0]=="*": #if the team was not in the previous ranking
+				print "%3d  *  %6.1f  *  %2d    %s" %(counter, team.power, team.num_games, team.name)
+			else: # if the team was previously ranked
+				if changes[team.name][0]==0:
+					print "%3d         %6.1f" %(counter, team.power),
+					if changes[team.name][1]==0.0:
+						print "           %2d    %s" %(team.num_games, team.name)
+					else:
+						print " %5.1f     %2d    %s" %(changes[team.name][1],team.num_games, team.name)
+				if changes[team.name][1]==0.0 and changes[team.name][0]!=0:
+					print "%3d   %3d   %6.1f            %2d    %s" %(counter, changes[team.name][0], team.power, team.num_games, team.name)
+				if changes[team.name][0]!=0 and changes[team.name][1]!=0.0:
+					print "%3d   %3d   %6.1f  %5.1f     %2d    %s" %(counter, changes[team.name][0], team.power, changes[team.name][1],team.num_games, team.name)
+			counter += 1
+		print "\nTeams (re)entering the rankings this period"
+		print "\nTeams dropping out of the rankings this period"
+			
 	def add_note(self, note):
 		self.notes = note
 
-	def plot_team(self, team):
+	def plot_team(self, team, display_save=False):
 		opponent_powers = []
 		game_DOS = []
 		game_list = self.teams[team].games
+		colours = []
+		sizes = []
+		t_diff = (self.end - self.start).total_seconds()
+
 		for game in game_list:
+			colours.append((game.date - self.start).total_seconds()/t_diff)
+			sizes.append(weight(game.date,self.start, self.end)*100)
 			if self.teams[team].name == game.home_team:
 				opponent_powers.append(self.teams[game.away_team].power)
 				game_DOS.append(game.DOS)
@@ -507,10 +568,22 @@ class Ranking:
 		powers = np.arange(300, 1200, 1)
 		title = team + " predicted DOS with actual game data\nStrength = %.1f" %(self.teams[team].power)
 		plt.title(title)
-		plt.plot(opponent_powers,game_DOS,'r*', powers, f(powers), 'b')
-		plt.show()
-
+		plt.plot(powers, f(powers), 'b')
+		plt.scatter(opponent_powers,game_DOS, c= colours, marker = 'o', s=sizes)
+		axes = plt.gca()
+		axes.set_xlim([300,1200])
+		axes.set_ylim([-1,1])
 		
+		if display_save:
+			plt.show()
+		else:
+			name_parts = team.split(" ")
+			if len(name_parts) >1:
+				fig_name =  name_parts[0] + name_parts[1] + "_" + str(self.end) + ".png"
+			else:
+				fig_name =  name_parts[0] + "_" + str(self.end) + ".png"
+			plt.savefig("Plots/" + fig_name )
+		plt.close('all')
 
 	def __str__(self):
 		#number of teams includes inactive, disbanded and hiatus teams that are in the teams list
@@ -518,8 +591,4 @@ class Ranking:
 
 
 
-
-
-
-
-
+# Load a list of teams and handle teams that didn't play a game
