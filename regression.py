@@ -51,6 +51,7 @@ class Team:
 		self.hiatus = False
 		self.disbanded = False
 		self.games = []
+		self.previous_powers = {}
 
 	def increment_games(self):
 		self.num_games += 1
@@ -75,18 +76,33 @@ class Team:
 
 	def print_team(self):
 		#prints useful information about a team
+		print "\n"
 		print "=" * len(self.name)
 		print self.name
 		print "=" * len(self.name)
 		if self.power is not None:
 			print "Power: %5.1f" %(self.power)
 
-		print "Unique opponents:"
-		for opponent in self.opponents:
-			print "%s,"%(opponent),
-		print "\nGames:"
+		print "Unique opponents: %d" %(len(self.opponents))
+		print "Games: %d" %(self.num_games)
 		for game in self.games:
-			print game
+			if game.home_team == self.name:
+				opponent = game.away_team
+				opponent_score = game.away_score
+				self_score = game.home_score
+			else:
+				opponent = game.home_team
+				opponent_score = game.home_score
+				self_score = game.away_score
+
+			if opponent_score < self_score:
+				result = "Win "
+				signed_DOS = abs(game.DOS)
+			else:
+				result = "Loss"
+				signed_DOS = -abs(game.DOS)
+
+			print "%s  %s  %3d  || %s  %3d  | %s  %4d  %6.3f" %(game.date, self.name.ljust(40), self_score, opponent.ljust(40), opponent_score, result, self_score - opponent_score, signed_DOS)
 
 	def __str__(self):
 		return self.name
@@ -124,14 +140,29 @@ class Game:
 		diff = window_end - self.date
 		months_ago = floor(12*diff.days/365) #hence 364 day difference rounds down to 11 months
 
+		weight = 1.0
+		weight_DOS = 1.0
+		weight_age = 1.0
+
+		# Experimental weight - higher DOS is penalised according to a decay function
+		# This function is between 0 and 1.
+		# For small x it is close to 1
+		# As x increases it sigmoidally approaches 0
+		# The steepness is controlled by the power
+		# The inflection point is controlled by the coefficient in the power
+		# With 1.25 as the coefficient, the inflection occurs at 1/1.25 = 0.8
+		#weight_DOS = 1 / ( 1 + (1.5 * self.DOS)**6)
+
 		#return (12-months_ago)/12 #linearly decay, month by month
 		#games within las 6 months are weighted 1, linear decay between 6 and 12 months, after 12 months weight is zero
 		if months_ago<6:
-			return 1
+			weight_age = 1
 		elif 6<=months_ago<=12:
-			return float(12 - months_ago)/6
+			weight_age = float(12 - months_ago)/6
 		else:
-			return 0
+			weight_age = 0
+
+		return weight_age * weight_DOS
 
 class Week:
 	#This class is only used internally and so dates will already be in datetime format
@@ -177,6 +208,8 @@ class Ranking:
 			self.load_hiatus_teams(hiatus_file)
 		if disbanded_file is not None:
 			self.load_disbanded_teams(disbanded_file)
+
+		self.s = 100 # The scaling factor for the logistic equation
 
 	def _make_weeks(self):
 		#weeks go from Thursday to Wednesday to make sure tournaments are captured in a single week
@@ -269,7 +302,7 @@ class Ranking:
 			print "\nThe following teams played games, but did not meet minimum activity requirements:"
 			for team in self.inactive:
 				if team.name not in self.hiatus:
-					print team
+					print team.name
 
 		if no_games:
 			print "\nThe following teams played no games in the given period:"
@@ -320,6 +353,9 @@ class Ranking:
 			num_teams = len(self.fixed_order)
 			y = [0] * num_teams
 			# the loop assembles the sum of squares derivative for each team
+			# i is the team of interest
+			# j is the opponent
+			# x is a vector of powers, hence x[i] is the power for the team of interest and x[j] for the opponent
 			for team, i in zip(self.fixed_order, xrange(num_teams)):
 				for game in self.teams[team].games:
 					# derivative is slightly differenct if the team is home or away
@@ -337,6 +373,8 @@ class Ranking:
 		# the following line is whichever ranking methodology has been chosen
 		self.regression_ranking()
 
+		self.save_raw_powers()
+
 		#sort the dictionary, then use list comprehension to only return the team object
 		self.ranked_list_full = [value for key,value in sorted(self.teams.items(), key=lambda x: x[1].power, reverse = True)]
 
@@ -350,6 +388,11 @@ class Ranking:
 			else:
 				self.inactive.append(team)
 
+		# Finally, save the ranking data to file
+		self.save_ranking_to_file()
+		self.save_powers()
+
+	def save_ranking_to_file(self):
 		output = 'ranking_' + str(self.start) + '_to_' + str(self.end) + '.csv'
 		with open(output, 'wb') as csvfile:
 			game_writer = csv.writer(csvfile, delimiter=',')
@@ -366,13 +409,29 @@ class Ranking:
 				game_writer.writerow(team_data)
 				counter += 1
 		
+	def save_powers(self):
+		power_file = 'powers_' + str(self.end) + '.csv'
+		with open(power_file, 'wb') as pfile:
+			date = str(self.end).replace("-","")
+			power_writer = csv.writer(pfile, delimiter=',')
+			for team in self.teams:
+				power_writer.writerow([self.teams[team].name, self.teams[team].power])
+
+	def save_raw_powers(self):
+		power_file = 'raw_powers_' + str(self.end) + '.csv'
+		with open(power_file, 'wb') as pfile:
+			date = str(self.end).replace("-","")
+			power_writer = csv.writer(pfile, delimiter=',')
+			for team in self.teams:
+				power_writer.writerow([self.teams[team].name, self.teams[team].power])
+
 	def regression_ranking(self):
 		#this uses least squares regression to find the most appropriate power rating for each team
 		#it solves power ratings simulatenously and then uses them to rank the teams
 		#to solve, we minimise the sum of least squares by taking a derivative and forcing it to zero
 		#this cannot be solved analytically, so a numerical method for nonlinear systems is used (fsolve)
 		regression = self._make_regression_function()
-		reg_input = [700] * len(self.fixed_order) #initial guess power
+		reg_input = [0] * len(self.fixed_order) #initial guess power
 		reg_result = fsolve(regression, reg_input) #magic happens here
 		#order the teams by power
 		#at this stage the powers have yet to be normalised to an appropriate range
@@ -400,36 +459,37 @@ class Ranking:
 
 		if len(self.region_list)>1:
 			for sublist,region_number in zip(self.region_list,xrange(len(self.region_list))):
-				ranked_regions.append([])
-				if region_number >0: #python indexes from 0, therefore Region 1 is 0
-					#this normalises the other regions so the strongest team has power = 0
-					#setting it to zero shows how the the other teams will fall relative to the strongest
-					max_power = None
-					for team in sublist:
-						if self.teams[team].power > max_power:
-							max_power = self.teams[team].power
-					adjustment = max_power
-				print "\nRegion %d" %(region_number+1)#because python indexes from 0
-				print "========"
-				if region_number>0:
-					print "These powers only show how this region structured. They do not reflect global power"
-					print "A subjective rating for this region is required."
-				for team in self.ranked_list_full:
-					if team.name in sublist:
-						if region_number>0:
-							self.teams[team.name].power -= adjustment
-						print "%7.1f    %2d    %s" %(team.power, team.num_games, team.name)
-						ranked_regions[region_number].append(team.name)
+				if len(sublist)>1:
+					ranked_regions.append([])
+					if region_number >0: #python indexes from 0, therefore Region 1 is 0
+						#this normalises the other regions so the strongest team has power = 0
+						#setting it to zero shows how the the other teams will fall relative to the strongest
+						max_power = None
+						for team in sublist:
+							if self.teams[team].power > max_power:
+								max_power = self.teams[team].power
+						adjustment = max_power
+					print "\nRegion %d" %(region_number+1)#because python indexes from 0
+					print "========"
+					if region_number>0:
+						print "These powers only show how this region structured. They do not reflect global power"
+						print "A subjective rating for this region is required."
+					for team in self.ranked_list_full:
+						if team.name in sublist:
+							if region_number>0:
+								self.teams[team.name].power -= adjustment
+							print "%7.1f    %2d    %s" %(team.power, team.num_games, team.name)
+							ranked_regions[region_number].append(team.name)
 
 			satisfied = False
 			adjust_to = []
 
 			while not satisfied:
-				for i in xrange(1,len(self.region_list)):
+				for i in xrange(1,len(ranked_regions)):
 					print "\nPlease choose the power rating %s should have in Region 1" %(ranked_regions[i][0])
 					adjust_to.append(raw_input("Power = "))
 				#adjust powers and print full rankings
-				for i in xrange(1,len(self.region_list)):
+				for i in xrange(1,len(ranked_regions)):
 					adjustment = float(adjust_to[i-1]) - self.teams[ranked_regions[i][0]].power
 					for team in ranked_regions[i]:
 						self.teams[team].power += adjustment
@@ -473,11 +533,12 @@ class Ranking:
 
 	def expected_result(self, home_team, away_team):
 		#uses logistic regression to predict the DOS outcome for a matchup
-		scaling_factor = 100
 		home = self.teams[home_team]
 		away = self.teams[away_team]
-		e_DOS = -1 + 2/(1 + exp((away.power - home.power)/scaling_factor))
+		e_DOS = -1 + 2/(1 + exp((away.power - home.power)/self.s))
 		ratio = (1 - e_DOS)/(e_DOS + 1) #away_score = home_score * ratio
+		print "%s has a power of %.1f" %(home_team, home.power)
+		print "%s has a power of %.1f" %(away_team, away.power)
 		if ratio > 1: #away is expected to win
 			print "%s is predicted to beat %s by a factor of %.1f with a DOS of %.3f" %(away_team,home_team, ratio, abs(e_DOS))
 		elif ratio <1:
@@ -589,6 +650,217 @@ class Ranking:
 		#number of teams includes inactive, disbanded and hiatus teams that are in the teams list
 		return "Ranking period: %s - %s\n%d games\n%d teams\nNotes: %s" %(str(self.start), str(self.end),len(self.games), len(self.teams),self.notes)
 
+
+
+class ImprovedRanking(Ranking):
+	# The file previous_ranking_dates_file must contain dates in descending order (i.e. newest first)
+	# The dates are the end date of each ranking period
+	# There should be at least one year's worth of ranking dates in the file
+	# The file needs to be managed manually at this point
+	
+	def __init__(self, start_date, end_date, games_file, previous_ranking_dates_file, teams_file = None, hiatus_file = None, disbanded_file = None):
+		Ranking.__init__(self, start_date, end_date, games_file, teams_file = None, hiatus_file = None, disbanded_file = None)
+		self.previous_ranking_dates = [] # The dates will be loaded in order from newest to oldest
+		self.teams_with_new_games = []
+		self.load_previous_powers(previous_ranking_dates_file)
+
+	def load_previous_powers(self, prd_file):
+		with open(prd_file, 'r') as csvfile:
+			prd_reader = csv.reader(csvfile, dialect='excel')
+			for prd in prd_reader:
+				self.previous_ranking_dates.append(str2dt(prd[0]))
+
+		for date in self.previous_ranking_dates:
+			pp_file = 'powers_' + str(date) + '.csv'
+			with open(pp_file, 'r') as pp_file:
+				pp_reader = csv.reader(pp_file, delimiter=',')
+				for pair in pp_reader:
+					if pair[0] not in self.teams:
+						self.teams[pair[0]] = Team(pair[0])
+						self.teams[pair[0]].power = 700
+					self.teams[pair[0]].previous_powers[date] = float(pair[1])
+		
+		# Make a list of team that have added new game and who will have their ranking adjusted
+		for game in self.games:
+			if game.date > self.previous_ranking_dates[0]:
+				if game.home_team not in self.teams_with_new_games:
+					self.teams_with_new_games.append(game.home_team)
+				if game.away_team not in self.teams_with_new_games:
+					self.teams_with_new_games.append(game.away_team)
+
+	def _make_regression_function(self):
+		def reg_func(x):
+			# y is a vector of derivatives. the goal is solve y = 0
+			num_teams = len(self.fixed_order)
+			y = [0] * num_teams
+			# the loop assembles the sum of squares derivative for each team
+			# i is the team of interest
+			# j is the opponent
+			# x is a vector of powers, hence x[i] is the power for the team of interest and x[j] for the opponent
+			for team, i in zip(self.fixed_order, xrange(num_teams)):
+				if team in self.teams_with_new_games:
+					# if self.teams[team].name == "Manchester Roller Derby":
+					# 	print 'Manchester Roller Derby' + str(i)
+					for game in self.teams[team].games:
+						# derivative is slightly differenct if the team is home or away
+						if game.home_team == self.teams[team].name:
+							j = self.fixed_order.index(game.away_team)
+							# If the game is from previous ranking, then grab the opponent's power from that ranking
+							if game.date > self.previous_ranking_dates[0]:
+								# if self.teams[team].name == "Manchester Roller Derby":
+								# 	print 'New ' + game.away_team + ' weight ' + str(game.weight(self.start, self.end)) + ' ' + str(j)
+								y[i] += -(game.DOS + tanh((x[j]-x[i])/(2*self.s)))/(self.s*cosh((x[j]-x[i])/(2*self.s))**2)#*game.weight(self.start, self.end)
+							else:
+								# if self.teams[team].name == "Manchester Roller Derby":
+								# 	print 'Old ' + game.away_team + ' weight ' + str(game.weight(self.start, self.end))+ ' ' + str(j)
+								prev_power = float(self.get_previous_power(game.away_team, game.date))
+								y[i] += -(game.DOS + tanh((prev_power - x[i])/(2*self.s)))/(self.s*cosh((prev_power - x[i])/(2*self.s))**2)#*game.weight(self.start, self.end)
+						else:
+							j = self.fixed_order.index(game.home_team)
+							if game.date > self.previous_ranking_dates[0]:
+								# if self.teams[team].name == "Manchester Roller Derby":
+								# 	print 'New ' + game.home_team + ' weight ' + str(game.weight(self.start, self.end))+ ' ' + str(j)
+								y[i] += (game.DOS + tanh((x[i]-x[j])/(2*self.s)))/(self.s*cosh((x[i]-x[j])/(2*self.s))**2)#*game.weight(self.start, self.end)
+							else:
+								# if self.teams[team].name == "Manchester Roller Derby":
+								# 	print 'Old ' + game.home_team + ' weight ' + str(game.weight(self.start, self.end))+ ' ' + str(j)
+								prev_power = float(self.get_previous_power(game.home_team, game.date))
+								y[i] += (game.DOS + tanh((x[i]-prev_power)/(2*self.s)))/(self.s*cosh((x[i]-prev_power)/(2*self.s))**2)#*game.weight(self.start, self.end)
+			return y
+		return reg_func
+
+	def regression_ranking(self):
+		#this uses least squares regression to find the most appropriate power rating for each team
+		#it solves power ratings simulatenously and then uses them to rank the teams
+		#to solve, we minimise the sum of least squares by taking a derivative and forcing it to zero
+		#this cannot be solved analytically, so a numerical method for nonlinear systems is used (fsolve)
+		regression = self._make_regression_function()
+		reg_input = [0] * len(self.fixed_order) #initial guess power
+		reg_result = fsolve(regression, reg_input) #magic happens here
+
+		#order the teams by power
+		#at this stage the powers have yet to be normalised to an appropriate range
+		for team,i in zip(self.fixed_order,xrange(len(reg_result))):
+			self.teams[team].power  = copy.deepcopy(reg_result[i])
+
+	def create_ranking(self):
+		# the following line is whichever ranking methodology has been chosen
+		self.regression_ranking()
+
+		self.save_raw_powers()
+
+		#normalises the powers so the strongest team in the biggest region has power 1000
+		# this assumes that the strongest team over all defninitely played games this time
+		max_power = None
+		for team in self.teams_with_new_games:
+			if self.teams[team].power > max_power:
+				max_power = self.teams[team].power
+		adjustment = max_power - 1000
+		for team in self.teams.values():
+			team.power -= adjustment
+
+		#adjust the powers of the teams with no new games to their previous powers
+		for team in self.teams:
+			if team not in self.teams_with_new_games:
+				self.teams[team].power = self.teams[team].previous_powers[self.previous_ranking_dates[0]]
+
+		#sort the dictionary, then use list comprehension to only return the team object
+		self.ranked_list_full = [value for key,value in sorted(self.teams.items(), key=lambda x: x[1].power, reverse = True)]
+
+		#normalise the powers and fix separate regions
+		self.anchor_regions()
+
+		#remove hiatus, disbanded, and non-minimum-requirements teams and populate inactive list
+		for team in self.ranked_list_full:
+			if team.is_active() and not team.hiatus and not team.disbanded:
+				self.ranked_list_active.append(team)
+			else:
+				self.inactive.append(team)
+
+		# Finally, save the ranking data to file
+		self.save_ranking_to_file()
+		self.save_powers()
+
+	def get_previous_power(self, team, game_date):
+
+		for date in self.previous_ranking_dates:
+			if game_date < date:
+				# Then we have found the rankings period where this game was first used
+				return self.teams[team].previous_powers[date]
+				# This should always find a value given a key (date) because a team will only be given a power for that ranking period
+				# if they played a game in that period
+
+		# If the loop finishes without returning, then something has gone wrong, and need to throw an error
+		raise ValueError('Failed to get a date')
+
+	def anchor_regions(self):
+		#if there are disconnected regions in the network of games
+		#this provides a means for giving the smaller regions a way to be subjectively anchored in
+		#the largest region. it uses the highest ranked team in the smaller region as the anchor
+		#and all of the other teams keep their relative power difference
+		self.determine_regions()
+		ranked_regions = []
+		#orders regions by size
+		self.region_list = sorted(self.region_list, key=len, reverse = True)
+
+
+		#normalises the powers so the strongest team in the biggest region has power 1000
+		# max_power = None
+		# for team in self.region_list[0]:
+		# 	if team in self.teams_with_new_games:
+		# 		if self.teams[team].power > max_power:
+		# 			max_power = self.teams[team].power
+		# adjustment = max_power - 1000
+		# for team in self.teams.values():
+		# 	team.power -= adjustment
+
+		if len(self.region_list)>1:
+			for sublist,region_number in zip(self.region_list,xrange(len(self.region_list))):
+				if len(sublist)>1:
+					ranked_regions.append([])
+					if region_number >0: #python indexes from 0, therefore Region 1 is 0
+						#this normalises the other regions so the strongest team has power = 0
+						#setting it to zero shows how the the other teams will fall relative to the strongest
+						max_power = None
+						for team in sublist:
+							if self.teams[team].power > max_power:
+								max_power = self.teams[team].power
+						adjustment = max_power
+					print "\nRegion %d" %(region_number+1)#because python indexes from 0
+					print "========"
+					if region_number>0:
+						print "These powers only show how this region structured. They do not reflect global power"
+						print "A subjective rating for this region is required."
+					for team in self.ranked_list_full:
+						if team.name in sublist:
+							if region_number>0:
+								self.teams[team.name].power -= adjustment
+							print "%7.1f    %2d    %s" %(team.power, team.num_games, team.name)
+							ranked_regions[region_number].append(team.name)
+
+			satisfied = False
+			adjust_to = []
+
+			while not satisfied:
+				for i in xrange(1,len(ranked_regions)):
+					print "\nPlease choose the power rating %s should have in Region 1" %(ranked_regions[i][0])
+					adjust_to.append(raw_input("Power = "))
+				#adjust powers and print full rankings
+				for i in xrange(1,len(ranked_regions)):
+					adjustment = float(adjust_to[i-1]) - self.teams[ranked_regions[i][0]].power
+					for team in ranked_regions[i]:
+						self.teams[team].power += adjustment
+
+				self.ranked_list_full = [value for key,value in sorted(self.teams.items(), key=lambda x: x[1].power, reverse = True)]
+				self.print_rankings(False)
+
+
+				print "\nAre you happy with these rankings?"
+				response = raw_input("y or n: ")
+				if response == "y":
+					satisfied = True
+				else:
+					adjust_to = []
 
 
 # Load a list of teams and handle teams that didn't play a game
