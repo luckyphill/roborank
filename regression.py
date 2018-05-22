@@ -688,7 +688,7 @@ class ImprovedRanking(Ranking):
 				if game.away_team not in self.teams_with_new_games:
 					self.teams_with_new_games.append(game.away_team)
 
-	def _make_regression_function(self):
+	def _make_regression_function(self,debug=False):
 		def reg_func(x):
 			# y is a vector of derivatives. the goal is solve y = 0
 			num_teams = len(self.fixed_order)
@@ -699,33 +699,34 @@ class ImprovedRanking(Ranking):
 			# x is a vector of powers, hence x[i] is the power for the team of interest and x[j] for the opponent
 			for team, i in zip(self.fixed_order, xrange(num_teams)):
 				if team in self.teams_with_new_games:
-					# if self.teams[team].name == "Manchester Roller Derby":
-					# 	print 'Manchester Roller Derby' + str(i)
+					if debug:
+						print team + " equation"
+						print "-" * (len(team) + 9)
 					for game in self.teams[team].games:
-						# derivative is slightly differenct if the team is home or away
+						# derivative is slightly different if the team is home or away
 						if game.home_team == self.teams[team].name:
 							j = self.fixed_order.index(game.away_team)
 							# If the game is from previous ranking, then grab the opponent's power from that ranking
 							if game.date > self.previous_ranking_dates[0]:
-								# if self.teams[team].name == "Manchester Roller Derby":
-								# 	print 'New ' + game.away_team + ' weight ' + str(game.weight(self.start, self.end)) + ' ' + str(j)
+								if debug:
+									print "-(%.3f + tanh((%s-%s)/(%d)))/(%d*cosh((%s-%s)/(%d))^2)*%.6f" %(game.DOS, game.away_team[:3], team[:3],2*self.s,self.s, game.away_team[:3], team[:3],2*self.s,game.weight(self.start, self.end))
 								y[i] += -(game.DOS + tanh((x[j]-x[i])/(2*self.s)))/(self.s*cosh((x[j]-x[i])/(2*self.s))**2)#*game.weight(self.start, self.end)
 							else:
-								# if self.teams[team].name == "Manchester Roller Derby":
-								# 	print 'Old ' + game.away_team + ' weight ' + str(game.weight(self.start, self.end))+ ' ' + str(j)
 								prev_power = float(self.get_previous_power(game.away_team, game.date))
 								y[i] += -(game.DOS + tanh((prev_power - x[i])/(2*self.s)))/(self.s*cosh((prev_power - x[i])/(2*self.s))**2)#*game.weight(self.start, self.end)
+								if debug:
+									print "-(%.3f + tanh((%.1f-%s)/(%d)))/(%d*cosh((%.1f-%s)/(%d))^2)*%.6f" %(game.DOS, prev_power, team[:3],2*self.s,self.s, prev_power, team[:3],2*self.s,game.weight(self.start, self.end))
 						else:
 							j = self.fixed_order.index(game.home_team)
 							if game.date > self.previous_ranking_dates[0]:
-								# if self.teams[team].name == "Manchester Roller Derby":
-								# 	print 'New ' + game.home_team + ' weight ' + str(game.weight(self.start, self.end))+ ' ' + str(j)
+								if debug:
+									print "+(%.3f + tanh((%s-%s)/(%d)))/(%d*cosh((%s-%s)/(%d))^2)*%.6f" %(game.DOS, team[:3], game.home_team[:3],2*self.s,self.s, team[:3], game.home_team[:3],2*self.s,game.weight(self.start, self.end))
 								y[i] += (game.DOS + tanh((x[i]-x[j])/(2*self.s)))/(self.s*cosh((x[i]-x[j])/(2*self.s))**2)#*game.weight(self.start, self.end)
 							else:
-								# if self.teams[team].name == "Manchester Roller Derby":
-								# 	print 'Old ' + game.home_team + ' weight ' + str(game.weight(self.start, self.end))+ ' ' + str(j)
 								prev_power = float(self.get_previous_power(game.home_team, game.date))
 								y[i] += (game.DOS + tanh((x[i]-prev_power)/(2*self.s)))/(self.s*cosh((x[i]-prev_power)/(2*self.s))**2)#*game.weight(self.start, self.end)
+								if debug:
+									print "+(%.3f + tanh((%s-%.1f)/(%d)))/(%d*cosh((%s-%.1f)/(%d))^2)*%.6f" %(game.DOS, team[:3], prev_power,2*self.s,self.s, team[:3], prev_power,2*self.s,game.weight(self.start, self.end))
 			return y
 		return reg_func
 
@@ -735,7 +736,13 @@ class ImprovedRanking(Ranking):
 		#to solve, we minimise the sum of least squares by taking a derivative and forcing it to zero
 		#this cannot be solved analytically, so a numerical method for nonlinear systems is used (fsolve)
 		regression = self._make_regression_function()
-		reg_input = [0] * len(self.fixed_order) #initial guess power
+		reg_input = []
+		for team, i in zip(self.fixed_order, xrange(len(self.fixed_order))):
+			if self.previous_ranking_dates[0] in self.teams[team].previous_powers:
+				reg_input.append(self.teams[team].previous_powers[self.previous_ranking_dates[0]])
+			else:
+				 reg_input.append(700)#initial guess power
+		# reg_input = [500] * len(self.fixed_order) #initial guess power
 		reg_result = fsolve(regression, reg_input) #magic happens here
 
 		#order the teams by power
@@ -768,7 +775,7 @@ class ImprovedRanking(Ranking):
 		self.ranked_list_full = [value for key,value in sorted(self.teams.items(), key=lambda x: x[1].power, reverse = True)]
 
 		#normalise the powers and fix separate regions
-		self.anchor_regions()
+		#self.anchor_regions()
 
 		#remove hiatus, disbanded, and non-minimum-requirements teams and populate inactive list
 		for team in self.ranked_list_full:
