@@ -19,27 +19,10 @@ improved_ranking.expected_result('Manchester Roller Derby','Crash Test Brummies'
 
 reg_func = improved_ranking._make_regression_function(True)
 
-x = np.zeros(len(improved_ranking.teams))
+improved_ranking.compare_rankings(ranking,True)
+for team in improved_ranking.ranked_list_full:
+	improved_ranking.plot_team(team.name)
 
-# # Manchester and Brummies
-# x[35] = 533.1 #533.1
-# x[53] = 533.1 #780.1
-
-# # Fixed
-# x[36] = 647.1 #647.1
-# x[38] = 728.6 #728.6
-# x[37] = 794.1 #794.1
-# x[21] = 853.5 #853.5
-# x[41] = 838.8 #838.8
-# x[15] = 1000 #1000
-# x[44] = 828.4 #828.4
-# x[24] = 779.2 #779.2
+# x = np.zeros(len(improved_ranking.teams))
 
 # y = reg_func(x)
-# print y[15], y[53]
-
-# Only new
-# -0.0187339159091 0.00933332751177
-
-# All fixed teams
-# -0.0187339159091 0.00933332751177
