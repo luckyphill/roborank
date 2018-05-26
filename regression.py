@@ -39,7 +39,8 @@ def weight(game_date,window_start, window_end):
 class Team:
 	def __init__(self, name):
 		self.name = name
-		self.power = None
+		self.power = 0.0
+		self.rank = None
 		self.num_games = 0
 		self.num_wins = 0
 		self.is_new = False # a team will be considered new if it did not play last season
@@ -52,6 +53,7 @@ class Team:
 		self.disbanded = False
 		self.games = []
 		self.previous_powers = {}
+		self.previous_ranks = {}
 
 	def increment_games(self):
 		self.num_games += 1
@@ -73,6 +75,16 @@ class Team:
 	def add_game(self, game):
 		if game not in self.games:
 			self.games.append(game)
+			self.increment_games()
+			if game.home_team == self.name:
+				self.add_opponent(game.away_team)
+				if game.home_score > game.away_score:
+					self.increment_wins()
+			else:
+				self.add_opponent(game.home_team)
+				if game.away_score > game.home_score:
+					self.increment_wins()
+
 
 	def print_team(self):
 		#prints useful information about a team
@@ -199,7 +211,7 @@ class Ranking:
 		self.disbanded = []
 		self.hiatus = []
 		self.load_games(games_file)
-		self.load_teams()
+		self.load_teams(teams_file)
 		self.ranked_list_full = [] #a dictionary converted to a list of tuples. first item in tuple is team name, second item in tuple is the team object
 		self.ranked_list_active = [] # a ranked list of only teams that meet minimum requirements
 		self.inactive = []
@@ -242,35 +254,37 @@ class Ranking:
 				if week.start <= game.date <= week.end:
 					week.add_game(game)
 
-	def load_teams(self):
-		#loads teams from given ranking period and fills in some key data
+	def load_teams(self, teams_file):
+		# Load the list of teams if given
+		if teams_file:
+			with open(teams_file, 'r') as teams_in:
+				for row in teams_in:
+					team = row.rstrip('\n')
+					self.teams[team] = Team(team)
+					self.fixed_order.append(team)
+					# fixed_order is to force teams into a fixed order for later calculation, since dictionaries are not fixed
+
+		# Fill in the games for each team, catches if team is not in the team list
 		for game in self.games:
 			home = game.home_team
 			away = game.away_team
-			# add teams if they don't already exist.
-			# set initial power arbitrarily as 700
-			# fixed_order is to force teams into a fixed order for later calculation, since dictionaries are not fixed
+
+			# Add teams if they weren't loaded and append them to the teams_file
 			if home not in self.teams:
 				self.teams[home] = Team(home)
 				self.fixed_order.append(home)
-				self.teams[home].power = 700
+				with open(teams_file, 'a') as teams_in:
+					teams_in.write(home + "\n")
 
 			if away not in self.teams:
 				self.teams[away] = Team(away)
 				self.fixed_order.append(away)
-				self.teams[away].power = 700
+				with open(teams_file, 'a') as teams_in:
+					teams_in.write(away + "\n")
 
-			self.teams[home].increment_games()
-			self.teams[away].increment_games()
-			self.teams[home].add_opponent(away)
-			self.teams[away].add_opponent(home)
 			self.teams[home].add_game(game)
 			self.teams[away].add_game(game)
 
-			if game.home_score > game.away_score:
-				self.teams[home].increment_wins()
-			else:
-				self.teams[away].increment_wins()
 		#most appropriate to do this here after games and teams have been loaded
 		self.determine_regions()
 		
@@ -328,7 +342,7 @@ class Ranking:
 		# used to determine regions
 		# creates a list for each isolated group of teams as a sublist in self.region_list
 		for team in self.teams.values():
-			if not self._in_a_region(team.name, self.region_list):
+			if not self._in_a_region(team.name, self.region_list) and team.num_games != 0:
 				self.region_list.append([team.name])
 				self._recursive_regions(team,self.region_list[-1])
 
@@ -380,23 +394,18 @@ class Ranking:
 		self.anchor_regions()
 
 		#remove hiatus, disbanded, and non-minimum-requirements teams and populate inactive list
+		counter = 1
 		for team in self.ranked_list_full:
 			if team.is_active() and not team.hiatus and not team.disbanded:
 				self.ranked_list_active.append(team)
+				team.rank = counter
+				counter +=1
 			else:
 				if not team.disbanded:
 					self.inactive.append(team)
 
 		# Finally, save the ranking data to file
 		self.output_ranking_data()
-
-	def save_raw_powers(self):
-		power_file = 'raw_powers_' + str(self.end) + '.csv'
-		with open(power_file, 'wb') as pfile:
-			date = str(self.end).replace("-","")
-			power_writer = csv.writer(pfile, delimiter=',')
-			for team in self.teams:
-				power_writer.writerow([self.teams[team].name, self.teams[team].power])
 
 	def regression_ranking(self):
 		#this uses least squares regression to find the most appropriate power rating for each team
@@ -409,7 +418,8 @@ class Ranking:
 		#order the teams by power
 		#at this stage the powers have yet to be normalised to an appropriate range
 		for team,i in zip(self.fixed_order,xrange(len(reg_result))):
-			self.teams[team].power  = copy.deepcopy(reg_result[i])
+			if self.teams[team].num_games !=0:
+				self.teams[team].power  = copy.deepcopy(reg_result[i])
 
 	def anchor_regions(self):
 		#if there are disconnected regions in the network of games
@@ -428,7 +438,9 @@ class Ranking:
 				max_power = self.teams[team].power
 		adjustment = max_power - 1000
 		for team in self.teams.values():
-			team.power -= adjustment
+			if team.num_games !=0:
+				team.power -= adjustment
+
 
 		if len(self.region_list)>1:
 			for sublist,region_number in zip(self.region_list,xrange(len(self.region_list))):
@@ -480,21 +492,21 @@ class Ranking:
 
 	def load_hiatus_teams(self, hiatus_file):
 		#determine hiatus teams
-		with open(hiatus_file, 'rU') as csvfile:
-			team_reader = csv.reader(csvfile, dialect='excel')
-			for team in team_reader:
-				self.hiatus.append(team[0])
-				if team[0] in self.teams:
-					self.teams[team[0]].hiatus = True
+		with open(hiatus_file, 'rU') as h:
+			for row in h:
+				team = row.rstrip("\n")
+				self.hiatus.append(team)
+				if team in self.teams:
+					self.teams[team].hiatus = True
 		
 	def load_disbanded_teams(self,disbanded_file):
 		#determine disbanded
-		with open(disbanded_file, 'rU') as csvfile:
-			team_reader = csv.reader(csvfile, dialect='excel')
-			for team in team_reader:
-				self.disbanded.append(team[0])
-				if team[0] in self.teams:
-					self.teams[team[0]].disbanded = True
+		with open(disbanded_file, 'rU') as d:
+			for row in d:
+				team = row.rstrip("\n")
+				self.disbanded.append(team)
+				if team in self.teams:
+					self.teams[team].disbanded = True
 	
 	def add_new_game(self, game_data):
 		new_game = Game(game_data)
@@ -630,8 +642,9 @@ class Ranking:
 		self._output_games_organised_by_week()
 		self._output_ranking_all()
 		self._output_ranking_active()
-		self._output_powers()
+		self._output_powers_ranks()
 		self._output_inactive_teams()
+		self._output_ranking_detailed()
 
 	def _output_games_organised_by_team(self):
 		# This function writes a list of each team's games
@@ -706,14 +719,21 @@ class Ranking:
 					output.write(output_string)
 
 	def _output_ranking_all(self):
-		output = 'ranking_all_' + str(self.start) + '_to_' + str(self.end) + '.csv'
-		with open(output, 'wb') as csvfile:
-			game_writer = csv.writer(csvfile, delimiter=',')
-			csvfile.write("Ranking for all teams for the period " + str(self.start) + ' to ' + str(self.end) + "\n")
+		output_file = 'ranking_all_' + str(self.start) + '_to_' + str(self.end) + '.csv'
+		with open(output_file, 'w') as output:
 			counter = 1
+			output.write("Ranking for all teams in the period " + str(self.start) + ' to ' + str(self.end) + "\n")
+			output.write("\n  Rank   Power  Games    Team\n")
 			for team in self.ranked_list_full:
-				team_data = [counter,team.power, team.num_games, team.name]
-				game_writer.writerow(team_data)
+				team_data = " %3d   %7.1f   %3d     %s" %(counter,team.power, team.num_games, team.name)
+				if not team.is_active():
+					team_data += "\t(inactive)"
+				if team.hiatus:
+					team_data += "\t(hiatus)"
+				if team.disbanded:
+					team_data += "\t(disbanded)"
+				team_data += "\n"
+				output.write(team_data)
 				counter += 1
 
 	def _output_ranking_active(self):
@@ -727,13 +747,16 @@ class Ranking:
 				game_writer.writerow(team_data)
 				counter += 1
 
-	def _output_powers(self):
-		power_file = 'powers_' + str(self.end) + '.csv'
+	def _output_powers_ranks(self):
+		power_file = 'powers_ranks_' + str(self.end) + '.csv'
 		with open(power_file, 'wb') as pfile:
 			date = str(self.end).replace("-","")
 			power_writer = csv.writer(pfile, delimiter=',')
-			for team in self.teams:
-				power_writer.writerow([self.teams[team].name, self.teams[team].power])
+			for team in self.teams.values():
+				if team.rank is not None:
+					power_writer.writerow([team.name, team.power, team.rank])
+				else:
+					power_writer.writerow([team.name, team.power, "None"])
 
 	def _output_inactive_teams(self):
 		output_file = "inactive_teams_" + str(self.start) + '_to_' + str(self.end) + '.txt'
@@ -745,13 +768,26 @@ class Ranking:
 					output.write(" (hiatus)")
 				output.write("\n")
 
-		pass
+	def _output_ranking_detailed(self):
+		# Prints out a ranking ready to be distributed for public consumption
+		# Includes a section at the end listing inactive teams + hiatus/disbanded teams if their game data is used
+		output_file = 'ranking_' + str(self.start) + '_to_' + str(self.end) + '.csv'
+		with open(output_file, 'w') as output:
+			output.write("Ranking for active teams in the period " + str(self.start) + ' to ' + str(self.end) + "\n")
+			output.write("\n  Rank   Power  Games    Team\n")
+			for team in self.ranked_list_active:
+				team_data = " %3d   %7.1f   %3d     %s\n" %(team.rank, team.power, team.num_games, team.name)
+				output.write(team_data)
+			output.write("\nInactive teams this period:\n")
+			for team in self.inactive:
+				output.write(team.name)
+				if team.hiatus:
+					output.write(" (hiatus)")
+				output.write("\n")
 
 	def __str__(self):
 		#number of teams includes inactive, disbanded and hiatus teams that are in the teams list
 		return "Ranking period: %s - %s\n%d games\n%d teams\nNotes: %s" %(str(self.start), str(self.end),len(self.games), len(self.teams),self.notes)
-
-
 
 class ImprovedRanking(Ranking):
 	# The file previous_ranking_dates_file must contain dates in descending order (i.e. newest first)
@@ -759,29 +795,32 @@ class ImprovedRanking(Ranking):
 	# There should be at least one year's worth of ranking dates in the file
 	# The file needs to be managed manually at this point
 	
-	def __init__(self, start_date, end_date, games_file, previous_ranking_dates_file, teams_file = None, hiatus_file = None, disbanded_file = None):
-		Ranking.__init__(self, start_date, end_date, games_file, teams_file = None, hiatus_file = None, disbanded_file = None)
+	def __init__(self, start_date, end_date, games_file, previous_ranking_dates_file, teams_file, hiatus_file = None, disbanded_file = None):
+		Ranking.__init__(self, start_date, end_date, games_file, teams_file, hiatus_file, disbanded_file)
 		self.previous_ranking_dates = [] # The dates will be loaded in order from newest to oldest
 		self.teams_with_new_games = []
-		self.load_previous_powers(previous_ranking_dates_file)
+		self.load_previous_powers_ranks(previous_ranking_dates_file)
 
-	def load_previous_powers(self, prd_file):
+	def load_previous_powers_ranks(self, prd_file):
 		with open(prd_file, 'r') as csvfile:
 			prd_reader = csv.reader(csvfile, dialect='excel')
 			for prd in prd_reader:
 				self.previous_ranking_dates.append(str2dt(prd[0]))
 
 		for date in self.previous_ranking_dates:
-			pp_file = 'powers_' + str(date) + '.csv'
-			with open(pp_file, 'r') as pp_file:
-				pp_reader = csv.reader(pp_file, delimiter=',')
-				for pair in pp_reader:
-					if pair[0] not in self.teams:
-						self.teams[pair[0]] = Team(pair[0])
-						self.teams[pair[0]].power = 700
-					self.teams[pair[0]].previous_powers[date] = float(pair[1])
+			ppr_file = 'powers_ranks_' + str(date) + '.csv'
+			with open(ppr_file, 'r') as ppr_file:
+				ppr_reader = csv.reader(ppr_file, delimiter=',')
+				for ppr in ppr_reader:
+					if ppr[0] not in self.teams:
+						self.teams[ppr[0]] = Team(ppr[0])
+						self.teams[ppr[0]].power = 700
+					if ppr[1] != "0.0":
+						self.teams[ppr[0]].previous_powers[date] = float(ppr[1])
+					if ppr[2] != "None":
+						self.teams[ppr[0]].previous_ranks[date] = int(ppr[2])
 		
-		# Make a list of team that have added new game and who will have their ranking adjusted
+		# Make a list of teams that have added new games and who will have their ranking adjusted
 		for game in self.games:
 			if game.date > self.previous_ranking_dates[0]:
 				if game.home_team not in self.teams_with_new_games:
@@ -838,7 +877,8 @@ class ImprovedRanking(Ranking):
 		#order the teams by power
 		#at this stage the powers have yet to be normalised to an appropriate range
 		for team,i in zip(self.fixed_order,xrange(len(reg_result))):
-			self.teams[team].power  = copy.deepcopy(reg_result[i])
+			if self.teams[team].num_games !=0:
+				self.teams[team].power  = copy.deepcopy(reg_result[i])
 
 	def create_ranking(self):
 		# the following line is whichever ranking methodology has been chosen
@@ -854,10 +894,14 @@ class ImprovedRanking(Ranking):
 		# for team in self.teams.values():
 		# 	team.power -= adjustment
 
+		# No need to normalise as we have anchor points from the old data
+
 		#adjust the powers of the teams with no new games to their previous powers
+		# Need to fix this for when there is more than one previous ranking period
 		for team in self.teams:
 			if team not in self.teams_with_new_games:
-				self.teams[team].power = self.teams[team].previous_powers[self.previous_ranking_dates[0]]
+				if self.previous_ranking_dates[0] in self.teams[team].previous_powers:
+					self.teams[team].power = self.teams[team].previous_powers[self.previous_ranking_dates[0]]
 
 		#sort the dictionary, then use list comprehension to only return the team object
 		self.ranked_list_full = [value for key,value in sorted(self.teams.items(), key=lambda x: x[1].power, reverse = True)]
@@ -866,9 +910,12 @@ class ImprovedRanking(Ranking):
 		#self.anchor_regions()
 
 		#remove hiatus, disbanded, and non-minimum-requirements teams and populate inactive list
+		counter = 1
 		for team in self.ranked_list_full:
 			if team.is_active() and not team.hiatus and not team.disbanded:
 				self.ranked_list_active.append(team)
+				team.rank = counter
+				counter +=1
 			else:
 				if not team.disbanded:
 					self.inactive.append(team)
@@ -957,5 +1004,54 @@ class ImprovedRanking(Ranking):
 				else:
 					adjust_to = []
 
+	def _output_ranking_detailed(self):
+		# Prints out a ranking ready to be distributed for public consumption
+		# Includes a section at the end listing inactive teams + hiatus/disbanded teams if their game data is used
+		output_file = 'ranking_' + str(self.start) + '_to_' + str(self.end) + '.csv'
+		with open(output_file, 'w') as output:
+			output.write("Ranking for active teams in the period " + str(self.start) + ' to ' + str(self.end) + "\n")
+			output.write("\n  Rank   Power  Games    Team\n")
+			for team in self.ranked_list_active:
+				team_data = " %3d   %7.1f   %3d     %s" %(team.rank,team.power, team.num_games, team.name)
+				if self.previous_ranking_dates[0] not in team.previous_ranks:
+					team_data += " /\/\/"
+				team_data += "\n"
+				output.write(team_data)
+			
+			output.write("\nInactive teams this period:\n")
+			for team in self.inactive:
+				output.write(team.name)
+				if team.hiatus:
+					output.write(" (hiatus)")
+				if self.previous_ranking_dates[0] in team.previous_ranks:
+					output.write(" *")
+				output.write("\n")
 
+	def _output_ranking_comparison(self):
+		output_file = 'ranking_comparison_' + str(self.start) + '_to_' + str(self.end) + '.csv'
+		with open(output_file, 'w') as output:
+			output.write("Ranking for active teams in the period " + str(self.start) + ' to ' + str(self.end) + "\n")
+			output.write("\nRank | +/- | Power |  +/-  | Games | Team\n")
+			for team in self.ranked_list_active:
+				previous_rank = "None"
+				previous_power = "None"
+				if self.previous_ranking_dates[0] in team.previous_ranks:
+					# Need to make sure the team appears in the immeditaely preceding ranking
+					previous_rank = team.previous_ranks[self.previous_ranking_dates[0]]
+					previous_power = team.previous_powers[self.previous_ranking_dates[0]]
+				
+				if  previous_rank == "None" and previous_power == "None": #if the team was not in the previous ranking
+					output.write("%3d         %6.1f       N     %2d    %s\n" %(team.rank, team.power, team.num_games, team.name))
+				else: # if the team was previously ranked
+					if team.rank == previous_rank:
+						output.write("%3d         %6.1f" %(team.rank, team.power))
+						if team.power == previous_power:
+							output.write("            %2d    %s" %(team.num_games, team.name))
+						else:
+							output.write("  %6.1f     %2d    %s\n" %(team.power - previous_power,team.num_games, team.name))
+					if team.power == previous_power and team.rank != previous_rank:
+						output.write("%3d   %3d   %6.1f             %2d    %s\n" %(team.rank, -team.rank + previous_rank, team.power, team.num_games, team.name))
+					if team.power != previous_power and team.rank != previous_rank:
+						output.write("%3d   %3d   %6.1f  %6.1f     %2d    %s\n" %(team.rank, -team.rank + previous_rank, team.power, team.power - previous_power,team.num_games, team.name))
+		
 # Load a list of teams and handle teams that didn't play a game
