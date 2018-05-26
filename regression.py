@@ -151,7 +151,7 @@ class Game:
 		# The steepness is controlled by the power
 		# The inflection point is controlled by the coefficient in the power
 		# With 1.25 as the coefficient, the inflection occurs at 1/1.25 = 0.8
-		#weight_DOS = 1 / ( 1 + (1.5 * self.DOS)**6)
+		#weight_DOS = 1 / ( 1 + (1.25 * self.DOS)**6)
 
 		#return (12-months_ago)/12 #linearly decay, month by month
 		#games within las 6 months are weighted 1, linear decay between 6 and 12 months, after 12 months weight is zero
@@ -525,7 +525,7 @@ class Ranking:
 		if abs(away.power - home.power)>150:
 			print "The data says this might be a bit lop-sided..."
 
-	def compare_rankings(self, previous_ranking):
+	def compare_rankings(self, previous_ranking, full_list = False):
 		#takes in a ranking object and shows how the teams have moved
 		#the ranking passed in as argument is expected to be older than the ranking object that is running the function
 		print "\nChanges in ranking between"
@@ -558,20 +558,24 @@ class Ranking:
 
 		print "\nRank | +/- | Power |  +/-  | Games | Team"
 		counter = 1
-		for team in self.ranked_list_active:
+		if full_list:
+			list_for_ranking = self.ranked_list_full
+		else:
+			list_for_ranking = self.ranked_list_active
+		for team in list_for_ranking: #self.ranked_list_full:
 			if changes[team.name][0]=="*": #if the team was not in the previous ranking
-				print "%3d  *  %6.1f  *  %2d    %s" %(counter, team.power, team.num_games, team.name)
+				print "%3d     *   %6.1f       *     %2d    %s" %(counter, team.power, team.num_games, team.name)
 			else: # if the team was previously ranked
 				if changes[team.name][0]==0:
 					print "%3d         %6.1f" %(counter, team.power),
 					if changes[team.name][1]==0.0:
-						print "           %2d    %s" %(team.num_games, team.name)
+						print "            %2d    %s" %(team.num_games, team.name)
 					else:
-						print " %5.1f     %2d    %s" %(changes[team.name][1],team.num_games, team.name)
+						print " %6.1f     %2d    %s" %(changes[team.name][1],team.num_games, team.name)
 				if changes[team.name][1]==0.0 and changes[team.name][0]!=0:
-					print "%3d   %3d   %6.1f            %2d    %s" %(counter, changes[team.name][0], team.power, team.num_games, team.name)
+					print "%3d   %3d   %6.1f             %2d    %s" %(counter, changes[team.name][0], team.power, team.num_games, team.name)
 				if changes[team.name][0]!=0 and changes[team.name][1]!=0.0:
-					print "%3d   %3d   %6.1f  %5.1f     %2d    %s" %(counter, changes[team.name][0], team.power, changes[team.name][1],team.num_games, team.name)
+					print "%3d   %3d   %6.1f  %6.1f     %2d    %s" %(counter, changes[team.name][0], team.power, changes[team.name][1],team.num_games, team.name)
 			counter += 1
 		print "\nTeams (re)entering the rankings this period"
 		print "\nTeams dropping out of the rankings this period"
