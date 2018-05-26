@@ -373,8 +373,6 @@ class Ranking:
 		# the following line is whichever ranking methodology has been chosen
 		self.regression_ranking()
 
-		self.save_raw_powers()
-
 		#sort the dictionary, then use list comprehension to only return the team object
 		self.ranked_list_full = [value for key,value in sorted(self.teams.items(), key=lambda x: x[1].power, reverse = True)]
 
@@ -386,36 +384,11 @@ class Ranking:
 			if team.is_active() and not team.hiatus and not team.disbanded:
 				self.ranked_list_active.append(team)
 			else:
-				self.inactive.append(team)
+				if not team.disbanded:
+					self.inactive.append(team)
 
 		# Finally, save the ranking data to file
-		self.save_ranking_to_file()
-		self.save_powers()
-
-	def save_ranking_to_file(self):
-		output = 'ranking_' + str(self.start) + '_to_' + str(self.end) + '.csv'
-		with open(output, 'wb') as csvfile:
-			game_writer = csv.writer(csvfile, delimiter=',')
-			counter = 1
-			game_writer.writerow(["\nActive teams"])
-			for team in self.ranked_list_active:
-				team_data = [counter,team.power, team.num_games, team.name]
-				game_writer.writerow(team_data)
-				counter += 1
-			game_writer.writerow(["\nAll teams"])
-			counter = 1
-			for team in self.ranked_list_full:
-				team_data = [counter,team.power, team.num_games, team.name]
-				game_writer.writerow(team_data)
-				counter += 1
-		
-	def save_powers(self):
-		power_file = 'powers_' + str(self.end) + '.csv'
-		with open(power_file, 'wb') as pfile:
-			date = str(self.end).replace("-","")
-			power_writer = csv.writer(pfile, delimiter=',')
-			for team in self.teams:
-				power_writer.writerow([self.teams[team].name, self.teams[team].power])
+		self.output_ranking_data()
 
 	def save_raw_powers(self):
 		power_file = 'raw_powers_' + str(self.end) + '.csv'
@@ -604,6 +577,7 @@ class Ranking:
 		print "\nTeams dropping out of the rankings this period"
 			
 	def add_note(self, note):
+		# Might be useful
 		self.notes = note
 
 	def plot_team(self, team, display_save=False):
@@ -645,6 +619,129 @@ class Ranking:
 				fig_name =  name_parts[0] + "_" + str(self.end) + ".png"
 			plt.savefig("Plots/" + fig_name )
 		plt.close('all')
+
+	def output_ranking_data(self):
+		# A function to write all the important data to file
+		self._output_games_organised_by_team()
+		self._output_games_organised_by_week()
+		self._output_ranking_all()
+		self._output_ranking_active()
+		self._output_powers()
+		self._output_inactive_teams()
+
+	def _output_games_organised_by_team(self):
+		# This function writes a list of each team's games
+		# It is ordered by the ranking, so the create_ranking method must be called first
+		# Each game has two teams, so games will necessarily be found twice each in this list
+		# This is mainly for ease of inspection to ensure all relevant games are accounted for
+		output_file = "games_by_team_" + str(self.start) + '_to_' + str(self.end) + '.txt'
+		with open(output_file, 'w') as output:
+			output.write("A list of the games used in the rankings calculation for the period " + str(self.start) + ' to ' + str(self.end) + "\n")
+
+			for team in self.ranked_list_full:
+				output_string = "\n"
+				output_string += "=" * len(team.name)
+				output_string += "\n"
+				output_string += team.name
+				output_string += "\n"
+				output_string += "=" * len(team.name)
+				output_string += "\n"
+				if team.power is not None:
+					output_string += "Power: %5.1f" %(team.power)
+					output_string += "\n"
+
+				output_string += "Unique opponents: %d" %(len(team.opponents))
+				output_string += "\n"
+				output_string += "Games: %d" %(team.num_games)
+				output_string += "\n"
+				for game in team.games:
+					if game.home_team == team.name:
+						opponent = game.away_team
+						opponent_score = game.away_score
+						self_score = game.home_score
+					else:
+						opponent = game.home_team
+						opponent_score = game.home_score
+						self_score = game.away_score
+
+					if opponent_score < self_score:
+						result = "Win "
+						signed_DOS = abs(game.DOS)
+					else:
+						result = "Loss"
+						signed_DOS = -abs(game.DOS)
+
+					output_string += "%s  %s  %3d  || %s  %3d  | %s  %4d  %6.3f" %(game.date, team.name.ljust(40), self_score, opponent.ljust(40), opponent_score, result, self_score - opponent_score, signed_DOS)
+					output_string += "\n"
+
+				output.write(output_string)
+
+	def _output_games_organised_by_week(self):
+		# This function writes a list of each team's games
+		# It is ordered by date and grouped by week
+		# This is mainly for ease of inspection to ensure all relevant games are accounted for
+		output_file = "games_by_week_" + str(self.start) + '_to_' + str(self.end) + '.txt'
+		with open(output_file, 'w') as output:
+			output.write("A list of the games grouped by week used in the rankings calculation for the period " + str(self.start) + ' to ' + str(self.end) + "\n")
+
+			for week in self.weeks:
+				output_string = ''
+				if week.games:
+					#only prints the week if there are games in it
+					output_string += "\n"
+					output_string += "="*28
+					output_string += "\n"
+					output_string += "Week %s - %s" %(week.start, week.end)
+					output_string += "\n"
+					output_string += "="*28
+					output_string += "\n"
+					for game in week.games:
+						output_string += "%s  %s  %3d  || %s  %3d  | %6.3f" %(game.date, game.home_team.ljust(40), game.home_score, game.away_team.ljust(40), game.away_score, game.DOS)
+						output_string += "\n"
+					output_string += "\n"
+					output.write(output_string)
+
+	def _output_ranking_all(self):
+		output = 'ranking_all_' + str(self.start) + '_to_' + str(self.end) + '.csv'
+		with open(output, 'wb') as csvfile:
+			game_writer = csv.writer(csvfile, delimiter=',')
+			csvfile.write("Ranking for all teams for the period " + str(self.start) + ' to ' + str(self.end) + "\n")
+			counter = 1
+			for team in self.ranked_list_full:
+				team_data = [counter,team.power, team.num_games, team.name]
+				game_writer.writerow(team_data)
+				counter += 1
+
+	def _output_ranking_active(self):
+		output = 'ranking_active_' + str(self.start) + '_to_' + str(self.end) + '.csv'
+		with open(output, 'wb') as csvfile:
+			game_writer = csv.writer(csvfile, delimiter=',')
+			counter = 1
+			csvfile.write("Ranking for active teams for the period " + str(self.start) + ' to ' + str(self.end) + "\n")
+			for team in self.ranked_list_active:
+				team_data = [counter,team.power, team.num_games, team.name]
+				game_writer.writerow(team_data)
+				counter += 1
+
+	def _output_powers(self):
+		power_file = 'powers_' + str(self.end) + '.csv'
+		with open(power_file, 'wb') as pfile:
+			date = str(self.end).replace("-","")
+			power_writer = csv.writer(pfile, delimiter=',')
+			for team in self.teams:
+				power_writer.writerow([self.teams[team].name, self.teams[team].power])
+
+	def _output_inactive_teams(self):
+		output_file = "inactive_teams_" + str(self.start) + '_to_' + str(self.end) + '.txt'
+		with open(output_file,'w') as output:
+			output.write("Inactive teams for the period "+ str(self.start) + ' to ' + str(self.end) + "\n\n")
+			for team in self.inactive:
+				output.write(team.name)
+				if team.hiatus:
+					output.write(" (hiatus)")
+				output.write("\n")
+
+		pass
 
 	def __str__(self):
 		#number of teams includes inactive, disbanded and hiatus teams that are in the teams list
@@ -688,7 +785,7 @@ class ImprovedRanking(Ranking):
 				if game.away_team not in self.teams_with_new_games:
 					self.teams_with_new_games.append(game.away_team)
 
-	def _make_regression_function(self,debug=False):
+	def _make_regression_function(self):
 		def reg_func(x):
 			# y is a vector of derivatives. the goal is solve y = 0
 			num_teams = len(self.fixed_order)
@@ -699,34 +796,23 @@ class ImprovedRanking(Ranking):
 			# x is a vector of powers, hence x[i] is the power for the team of interest and x[j] for the opponent
 			for team, i in zip(self.fixed_order, xrange(num_teams)):
 				if team in self.teams_with_new_games:
-					if debug:
-						print team + " equation"
-						print "-" * (len(team) + 9)
 					for game in self.teams[team].games:
 						# derivative is slightly different if the team is home or away
 						if game.home_team == self.teams[team].name:
 							j = self.fixed_order.index(game.away_team)
-							# If the game is from previous ranking, then grab the opponent's power from that ranking
+							# If the game was first used in a previous ranking, then grab the opponent's power from that ranking
 							if game.date > self.previous_ranking_dates[0]:
-								if debug:
-									print "-(%.3f + tanh((%s-%s)/(%d)))/(%d*cosh((%s-%s)/(%d))^2)*%.6f" %(game.DOS, game.away_team[:3], team[:3],2*self.s,self.s, game.away_team[:3], team[:3],2*self.s,game.weight(self.start, self.end))
 								y[i] += -(game.DOS + tanh((x[j]-x[i])/(2*self.s)))/(self.s*cosh((x[j]-x[i])/(2*self.s))**2)#*game.weight(self.start, self.end)
 							else:
 								prev_power = float(self.get_previous_power(game.away_team, game.date))
 								y[i] += -(game.DOS + tanh((prev_power - x[i])/(2*self.s)))/(self.s*cosh((prev_power - x[i])/(2*self.s))**2)#*game.weight(self.start, self.end)
-								if debug:
-									print "-(%.3f + tanh((%.1f-%s)/(%d)))/(%d*cosh((%.1f-%s)/(%d))^2)*%.6f" %(game.DOS, prev_power, team[:3],2*self.s,self.s, prev_power, team[:3],2*self.s,game.weight(self.start, self.end))
 						else:
 							j = self.fixed_order.index(game.home_team)
 							if game.date > self.previous_ranking_dates[0]:
-								if debug:
-									print "+(%.3f + tanh((%s-%s)/(%d)))/(%d*cosh((%s-%s)/(%d))^2)*%.6f" %(game.DOS, team[:3], game.home_team[:3],2*self.s,self.s, team[:3], game.home_team[:3],2*self.s,game.weight(self.start, self.end))
 								y[i] += (game.DOS + tanh((x[i]-x[j])/(2*self.s)))/(self.s*cosh((x[i]-x[j])/(2*self.s))**2)#*game.weight(self.start, self.end)
 							else:
 								prev_power = float(self.get_previous_power(game.home_team, game.date))
 								y[i] += (game.DOS + tanh((x[i]-prev_power)/(2*self.s)))/(self.s*cosh((x[i]-prev_power)/(2*self.s))**2)#*game.weight(self.start, self.end)
-								if debug:
-									print "+(%.3f + tanh((%s-%.1f)/(%d)))/(%d*cosh((%s-%.1f)/(%d))^2)*%.6f" %(game.DOS, team[:3], prev_power,2*self.s,self.s, team[:3], prev_power,2*self.s,game.weight(self.start, self.end))
 			return y
 		return reg_func
 
@@ -754,17 +840,15 @@ class ImprovedRanking(Ranking):
 		# the following line is whichever ranking methodology has been chosen
 		self.regression_ranking()
 
-		self.save_raw_powers()
-
 		#normalises the powers so the strongest team in the biggest region has power 1000
 		# this assumes that the strongest team over all defninitely played games this time
-		max_power = None
-		for team in self.teams_with_new_games:
-			if self.teams[team].power > max_power:
-				max_power = self.teams[team].power
-		adjustment = max_power - 1000
-		for team in self.teams.values():
-			team.power -= adjustment
+		# max_power = None
+		# for team in self.teams_with_new_games:
+		# 	if self.teams[team].power > max_power:
+		# 		max_power = self.teams[team].power
+		# adjustment = max_power - 1000
+		# for team in self.teams.values():
+		# 	team.power -= adjustment
 
 		#adjust the powers of the teams with no new games to their previous powers
 		for team in self.teams:
@@ -782,16 +866,16 @@ class ImprovedRanking(Ranking):
 			if team.is_active() and not team.hiatus and not team.disbanded:
 				self.ranked_list_active.append(team)
 			else:
-				self.inactive.append(team)
+				if not team.disbanded:
+					self.inactive.append(team)
 
 		# Finally, save the ranking data to file
-		self.save_ranking_to_file()
-		self.save_powers()
+		self.output_ranking_data()
 
 	def get_previous_power(self, team, game_date):
 
 		for date in self.previous_ranking_dates:
-			if game_date < date:
+			if game_date <= date:
 				# Then we have found the rankings period where this game was first used
 				return self.teams[team].previous_powers[date]
 				# This should always find a value given a key (date) because a team will only be given a power for that ranking period
