@@ -156,6 +156,7 @@ class Game:
 		weight_DOS = 1.0
 		weight_age = 1.0
 
+		age_out_month = 6
 		# Experimental weight - higher DOS is penalised according to a decay function
 		# This function is between 0 and 1.
 		# For small x it is close to 1
@@ -163,14 +164,14 @@ class Game:
 		# The steepness is controlled by the power
 		# The inflection point is controlled by the coefficient in the power
 		# With 1.25 as the coefficient, the inflection occurs at 1/1.25 = 0.8
-		#weight_DOS = 1 / ( 1 + (1.25 * self.DOS)**6)
+		# weight_DOS = 1 / ( 1 + (1.5 * self.DOS)**6)
 
 		#return (12-months_ago)/12 #linearly decay, month by month
 		#games within las 6 months are weighted 1, linear decay between 6 and 12 months, after 12 months weight is zero
-		if months_ago<6:
+		if months_ago<age_out_month:
 			weight_age = 1
-		elif 6<=months_ago<=12:
-			weight_age = float(12 - months_ago)/6
+		elif age_out_month<=months_ago<=12:
+			weight_age = (float(12 - months_ago)/float(12 - age_out_month))**1
 		else:
 			weight_age = 0
 
@@ -537,6 +538,18 @@ class Ranking:
 		if abs(away.power - home.power)>150:
 			print "The data says this might be a bit lop-sided..."
 
+	def expected_power(self, home_team, home_score, away_score):
+		home = self.teams[home_team]
+		DOS = float(home_score - away_score) / (home_score + away_score)
+		print DOS
+
+		e_power = home.power + self.s * log(2/(DOS +1) - 1)
+
+		print "%s currently has a power rating of %.1f" %(home.name, home.power)
+		print "A theoretical game with score line %s %d to Opponent %d is played" %(home.name, home_score, away_score)
+		print "If this was the only game for the Opponent, the opponent's power would be:"
+		print "%.1f" %(e_power)
+
 	def compare_rankings(self, previous_ranking, full_list = False):
 		#takes in a ranking object and shows how the teams have moved
 		#the ranking passed in as argument is expected to be older than the ranking object that is running the function
@@ -596,7 +609,7 @@ class Ranking:
 		# Might be useful
 		self.notes = note
 
-	def plot_team(self, team, display_save=False):
+	def plot_team(self, team, display=False):
 		opponent_powers = []
 		game_DOS = []
 		game_list = self.teams[team].games
@@ -625,7 +638,7 @@ class Ranking:
 		axes.set_xlim([300,1200])
 		axes.set_ylim([-1,1])
 		
-		if display_save:
+		if display:
 			plt.show()
 		else:
 			name_parts = team.split(" ")
@@ -866,12 +879,19 @@ class ImprovedRanking(Ranking):
 		#this cannot be solved analytically, so a numerical method for nonlinear systems is used (fsolve)
 		regression = self._make_regression_function()
 		reg_input = []
-		for team, i in zip(self.fixed_order, xrange(len(self.fixed_order))):
+		for team in self.fixed_order:
 			if self.previous_ranking_dates[0] in self.teams[team].previous_powers:
-				reg_input.append(self.teams[team].previous_powers[self.previous_ranking_dates[0]])
+				if team == "Manneken Beasts":
+					reg_input.append(700)
+				else:
+					if team == "San Diego Aftershocks":
+						reg_input.append(700)
+					else:
+						reg_input.append(self.teams[team].previous_powers[self.previous_ranking_dates[0]])
+
 			else:
 				 reg_input.append(700)#initial guess power
-		# reg_input = [500] * len(self.fixed_order) #initial guess power
+
 		reg_result = fsolve(regression, reg_input) #magic happens here
 
 		#order the teams by power
@@ -1046,12 +1066,24 @@ class ImprovedRanking(Ranking):
 					if team.rank == previous_rank:
 						output.write("%3d         %6.1f" %(team.rank, team.power))
 						if team.power == previous_power:
-							output.write("            %2d    %s" %(team.num_games, team.name))
+							output.write("             %2d    %s\n" %(team.num_games, team.name))
 						else:
 							output.write("  %6.1f     %2d    %s\n" %(team.power - previous_power,team.num_games, team.name))
 					if team.power == previous_power and team.rank != previous_rank:
 						output.write("%3d   %3d   %6.1f             %2d    %s\n" %(team.rank, -team.rank + previous_rank, team.power, team.num_games, team.name))
 					if team.power != previous_power and team.rank != previous_rank:
 						output.write("%3d   %3d   %6.1f  %6.1f     %2d    %s\n" %(team.rank, -team.rank + previous_rank, team.power, team.power - previous_power,team.num_games, team.name))
+
+	def output_ranking_data(self):
+		# A function to write all the important data to file
+		self._output_games_organised_by_team()
+		self._output_games_organised_by_week()
+		self._output_ranking_all()
+		self._output_ranking_active()
+		self._output_powers_ranks()
+		self._output_inactive_teams()
+		self._output_ranking_detailed()
+		# for team in self.teams_with_new_games:
+		# 	self.plot_team(team)
 		
 # Load a list of teams and handle teams that didn't play a game
