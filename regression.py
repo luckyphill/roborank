@@ -171,7 +171,7 @@ class Game:
 		if months_ago<age_out_month:
 			weight_age = 1
 		elif age_out_month<=months_ago<=12:
-			weight_age = (float(12 - months_ago)/float(12 - age_out_month))**1
+			weight_age = 0.01 #(float(12 - months_ago)/float(12 - age_out_month))
 		else:
 			weight_age = 0
 
@@ -881,14 +881,20 @@ class ImprovedRanking(Ranking):
 		reg_input = []
 		for team in self.fixed_order:
 			if self.previous_ranking_dates[0] in self.teams[team].previous_powers:
+				
 				if team == "Manneken Beasts":
 					reg_input.append(700)
+				elif team == "San Diego Aftershocks":
+					reg_input.append(800)
+				elif team == "Toronto Men's Roller Derby":
+					reg_input.append(600)
+				elif team == "Tyne and Fear Roller Derby":
+					reg_input.append(800)
+				elif team == "Harm City Men's Derby":
+					reg_input.append(600)
 				else:
-					if team == "San Diego Aftershocks":
-						reg_input.append(700)
-					else:
-						reg_input.append(self.teams[team].previous_powers[self.previous_ranking_dates[0]])
-
+					reg_input.append(self.teams[team].previous_powers[self.previous_ranking_dates[0]])
+						
 			else:
 				 reg_input.append(700)#initial guess power
 

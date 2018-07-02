@@ -26,6 +26,7 @@
 20170624,Magic City Misfits,297,Minnesota Men's Roller Derby,103
 20170624,Magic City Misfits,315,Sydney City SMASH,45
 20170624,Philadelphia Hooligans,201,Mass Maelstrom,156
+20170624,Roller Derby Toulouse,170,Southern Discomfort,218
 20170625,Denver Ground Control,119,Magic City Misfits,217
 20170625,St. Louis Gatekeepers,423,Minnesota Men's Roller Derby,32
 20170625,Sydney City SMASH,66,Minnesota Men's Roller Derby,274
@@ -48,9 +49,16 @@
 20170723,Dakota Men's Roller Derby,198,Chicago Bruise Brothers,93
 20170723,Dakota Men's Roller Derby,137,Wisconsin Men's Roller Derby,222
 20170729,Flour City Fear Men's Roller Derby,154,Pittsburgh Blue Streaks,128
+20170729,Manchester Roller Derby,251,Panam Squad,61
+20170729,Roller Derby Toulouse,221,Lincolnshire Rolling Thunder,97
+20170729,Roller Derby Toulouse,249,Panam Squad,63
+20170729,Tyne and Fear Roller Derby,167,Manchester Roller Derby,250
 20170729,Tyne and Fear Roller Derby,131,Lincolnshire Rolling Thunder,218
 20170730,Lincolnshire Rolling Thunder,264,Panam Squad,91
+20170730,Manchester Roller Derby,152,Lincolnshire Rolling Thunder,126
+20170730,Roller Derby Toulouse,162,Manchester Roller Derby,151
 20170730,Tyne and Fear Roller Derby,240,Panam Squad,72
+20170730,Tyne and Fear Roller Derby,109,Roller Derby Toulouse,196
 20170806,Capital City Hooligans,101,Chicago Bruise Brothers,249
 20170812,Dakota Men's Roller Derby,75,Minnesota Men's Roller Derby,237
 20170812,Denver Ground Control,276,Dakota Men's Roller Derby,65
@@ -68,12 +76,22 @@
 20170916,Detroit Men's Roller Derby,230,Capital City Hooligans,123
 20170924,Granite City Brawlers,209,Nottingham Roller Derby,190
 20171007,Varsity Derby League,152,Sydney City SMASH,147
+20171013,Vancouver Murder,174,Manchester Roller Derby,200
+20171013,Roller Derby Toulouse,249,Philadelphia Hooligans,125
 20171013,Puget Sound Outcast Derby,205,Austin Anarchy,162
+20171013,San Diego Aftershocks,207,New York Shock Exchange,81
+20171013,St. Louis Gatekeepers,352,Manchester Roller Derby,83
+20171013,Bridgetown Roller Derby,266,Roller Derby Toulouse,83
 20171014,Southern Discomfort,308,Puget Sound Outcast Derby,96
 20171014,Vancouver Murder,270,Philadelphia Hooligans,69
+20171014,Manchester Roller Derby,186,New York Shock Exchange,123
+20171014,Roller Derby Toulouse,336,Puget Sound Outcast Derby,162
+20171014,St. Louis Gatekeepers,204,San Diego Aftershocks,133
 20171014,Bridgetown Roller Derby,233,Southern Discomfort,123
 20171015,Philadelphia Hooligans,192,Austin Anarchy,171
+20171015,Manchester Roller Derby,163,Roller Derby Toulouse,200
 20171015,Vancouver Murder,217,Austin Anarchy,139
+20171015,San Diego Aftershocks,241,Southern Discomfort,151
 20171015,St. Louis Gatekeepers,181,Bridgetown Roller Derby,156
 20171015,Atlanta Men's Roller Derby,178,Capital City Hooligans,127
 20171028,East Anglo Smacksons,53,Granite City Brawlers,271
@@ -93,7 +111,7 @@
 20180310,Lane County Concussion,203,Drive-By City Rollers,201
 20180310,Detroit Men's Roller Derby,258,Cleveland Men's Roller Derby,124
 20180310,Bridgetown Roller Derby,388,Drive-By City Rollers,39
-20180317,Barrow Infernos,288,Tyne and Fear Roller Derby,91
+20180317,Barrow Infernos,91,Tyne and Fear Roller Derby,288
 20180323,Texas Men's Roller Derby,623,Houston Men's Roller Derby,18
 20180331,Casco Bay Gentlemen's Derby,106,Mass Maelstrom,258
 20180407,Chicago Bruise Brothers,187,Detroit Men's Roller Derby,115
@@ -106,6 +124,8 @@
 20180415,Thunderquads Roller Derby Masculino,186,Derby Club le Cr_s Lattes Montpellier,78
 20180422,South Wales Silures,143,Crash Test Brummies,102
 20180428,Puget Sound Outcast Derby,294,Glenmore Reservoir Dogs,170
+20180428,Atlanta Men's Roller Derby,227,Harm City Men's Derby,89
+20180428,Flour City Fear Men's Roller Derby,96,Pittsburgh Blue Streaks,211
 20180429,Cincinnati Battering Rams,158,Cleveland Men's Roller Derby,108
 20180429,Drive-By City Rollers,228,Puget Sound Outcast Derby,126
 20180504,Denver Ground Control,287,Wheels of Mayhem,58
@@ -181,3 +201,4 @@
 20180603,Texas Men's Roller Derby,245,Magic City Misfits,202
 20180603,Wheels of Mayhem,124,San Diego Aftershocks,249
 20180603,Wheels of Mayhem,86,San Diego Aftershocks,271
+20180603,San Diego Aftershocks,140,Denver Ground Control,189
