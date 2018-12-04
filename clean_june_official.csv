@@ -32,7 +32,7 @@
 20170625,Sydney City SMASH,66,Minnesota Men's Roller Derby,274
 20170626,St. Louis Gatekeepers,411,Sydney City SMASH,40
 20170630,Drive-By City Rollers,151,Sydney City SMASH,143
-20170701,Nottingham Roller Derby,34,Barrow Infernos,259
+20170701,Super Smash Brollers,34,Barrow Infernos,259
 20170708,Cleveland Men's Roller Derby,104,Harm City Men's Derby,238
 20170708,Cleveland Men's Roller Derby,128,Detroit Men's Roller Derby,155
 20170708,Harm City Men's Derby,152,Detroit Men's Roller Derby,108
@@ -72,35 +72,32 @@
 20170813,Montreal Men's Roller Derby,205,Dakota Men's Roller Derby,101
 20170813,Philadelphia Hooligans,143,Austin Anarchy,125
 20170813,Race City Rebels,213,Minnesota Men's Roller Derby,132
-20170819,Nottingham Roller Derby,114,Wirral Roller Derby,167
+20170819,Super Smash Brollers,114,Wirral Roller Derby,167
 20170916,Detroit Men's Roller Derby,230,Capital City Hooligans,123
-20170924,Granite City Brawlers,209,Nottingham Roller Derby,190
+20170924,Granite City Brawlers,209,Super Smash Brollers,190
 20171007,Varsity Derby League,152,Sydney City SMASH,147
 20171013,Vancouver Murder,174,Manchester Roller Derby,200
 20171013,Roller Derby Toulouse,249,Philadelphia Hooligans,125
 20171013,Puget Sound Outcast Derby,205,Austin Anarchy,162
-20171013,San Diego Aftershocks,207,New York Shock Exchange,81
 20171013,St. Louis Gatekeepers,352,Manchester Roller Derby,83
 20171013,Bridgetown Roller Derby,266,Roller Derby Toulouse,83
 20171014,Southern Discomfort,308,Puget Sound Outcast Derby,96
 20171014,Vancouver Murder,270,Philadelphia Hooligans,69
 20171014,Manchester Roller Derby,186,New York Shock Exchange,123
 20171014,Roller Derby Toulouse,336,Puget Sound Outcast Derby,162
-20171014,St. Louis Gatekeepers,204,San Diego Aftershocks,133
 20171014,Bridgetown Roller Derby,233,Southern Discomfort,123
 20171015,Philadelphia Hooligans,192,Austin Anarchy,171
 20171015,Manchester Roller Derby,163,Roller Derby Toulouse,200
 20171015,Vancouver Murder,217,Austin Anarchy,139
-20171015,San Diego Aftershocks,241,Southern Discomfort,151
 20171015,St. Louis Gatekeepers,181,Bridgetown Roller Derby,156
 20171015,Atlanta Men's Roller Derby,178,Capital City Hooligans,127
 20171028,East Anglo Smacksons,53,Granite City Brawlers,271
 20171028,Collision Men's Derby,284,Harm City Men's Derby,109
 20171028,Lane County Concussion,215,The Skaters Grim,125
-20171111,Nottingham Roller Derby,389,East Anglo Smacksons,78
+20171111,Super Smash Brollers,389,East Anglo Smacksons,78
 20171111,Brisbane City Rollers,225,Varsity Derby League,91
 20171118,New York Shock Exchange,281,Quadfathers Men's Roller Derby,67
-20171216,Nottingham Roller Derby,171,West Swedish Roller Derby Society,141
+20171216,Super Smash Brollers,171,West Swedish Roller Derby Society,141
 20171216,South Wales Silures,85,Panam Squad,332
 20180210,Crash Test Brummies,61,Tyne and Fear Roller Derby,359
 20180210,Barrow Infernos,81,Manchester Roller Derby,400
@@ -118,10 +115,10 @@
 20180414,Puget Sound Outcast Derby,194,Austin Anarchy,184
 20180414,Philadelphia Hooligans,419,Toronto Men's Roller Derby,67
 20180414,Thunderquads Roller Derby Masculino,141,Panam Squad,145
-20180414,Derby Club le Cr_s Lattes Montpellier,241,Panam Squad,94
+20180414,Derby Club le Crès Lattes Montpellier,241,Panam Squad,94
 20180415,Austin Anarchy,256,Toronto Men's Roller Derby,107
 20180415,Puget Sound Outcast Derby,126,Philadelphia Hooligans,252
-20180415,Thunderquads Roller Derby Masculino,186,Derby Club le Cr_s Lattes Montpellier,78
+20180415,Thunderquads Roller Derby Masculino,186,Derby Club le Crès Lattes Montpellier,78
 20180422,South Wales Silures,143,Crash Test Brummies,102
 20180428,Puget Sound Outcast Derby,294,Glenmore Reservoir Dogs,170
 20180428,Atlanta Men's Roller Derby,227,Harm City Men's Derby,89
@@ -175,7 +172,7 @@
 20180527,West Swedish Roller Derby Society,160,South Wales Silures,158
 20180527,Your Mom Men's Derby,74,Denver Ground Control,229
 20180527,Manneken Beasts,680,Crash Test Brummies,45
-20180527,Nottingham Roller Derby,70,Barrow Infernos,320
+20180527,Super Smash Brollers,70,Barrow Infernos,320
 20180601,Chicago Bruise Brothers,198,Houston Men's Roller Derby,123
 20180601,Southern Discomfort,227,Magic City Misfits,158
 20180601,St. Louis Gatekeepers,261,Texas Men's Roller Derby,61
@@ -203,7 +200,7 @@
 20180603,Wheels of Mayhem,86,San Diego Aftershocks,271
 20180609,Minnesota Men's Roller Derby,382,Dakota Men's Roller Derby,31
 20180609,Lincolnshire Rolling Thunder,134,Tyne and Fear Roller Derby,84
-20180609,Nottingham Roller Derby,174,Granite City Brawlers,298
+20180609,Super Smash Brollers,174,Granite City Brawlers,298
 20180615,Collision Men's Derby,195,Cleveland Men's Roller Derby,83
 20180615,Chicago Bruise Brothers,269,Harm City Men's Derby,99
 20180615,Atlanta Men's Roller Derby,194,Flour City Fear Men's Roller Derby,128
@@ -229,3 +226,88 @@
 20180624,Denver Ground Control,285,Minnesota Men's Roller Derby,149
 20180624,Philadelphia Hooligans,79,St. Louis Gatekeepers,268
 20180624,Your Mom Men's Derby,201,Oklahoma Men's Roller Derby,100
+20180707,Flour City Fear Men's Roller Derby,178,Harm City Men's Derby,173
+20180707,Cincinnati Battering Rams,191,Capital City Hooligans,93
+20180714,Mass Maelstrom,197,Montreal Men's Roller Derby,202
+20180721,Wisconsin Men's Roller Derby,81,Chicago Bruise Brothers,246
+20180722,Pittsburgh Blue Streaks,31,Quadfathers Men's Roller Derby,537
+20180707,Cincinnati Battering Rams,164,Detroit Men's Roller Derby,130
+20180728,Detroit Men's Roller Derby,152,Cleveland Men's Roller Derby,179
+20180728,Detroit Men's Roller Derby,124,Flour City Fear Men's Roller Derby,278
+20180728,Flour City Fear Men's Roller Derby,159,Cleveland Men's Roller Derby,206
+20180804,Mass Maelstrom,103,Philadelphia Hooligans,336
+20180804,Quadfathers Men's Roller Derby,177,Austin Anarchy,169
+20180804,Toronto Men's Roller Derby,140,Denver Ground Control,271
+20180804,Race City Rebels,107,San Diego Aftershocks,187
+20180804,Sydney City SMASH,112,Brisbane City Rollers,301
+20180804,Quadfathers Men's Roller Derby,103,Philadelphia Hooligans,320
+20180804,San Diego Aftershocks,151,Denver Ground Control,244
+20180805,Mass Maelstrom,128,Austin Anarchy,248
+20180805,Toronto Men's Roller Derby,214,Race City Rebels,258
+20180805,Austin Anarchy,184,San Diego Aftershocks,112
+20180805,Race City Rebels,164,Quadfathers Men's Roller Derby,219
+20180805,Austin Anarchy,76,Philadelphia Hooligans,274
+20180818,Barrow Infernos,72,Lincolnshire Rolling Thunder,383
+20180818,Super Smash Brollers,64,Tyne and Fear Roller Derby,517
+20180818,Manneken Beasts,211,Barrow Infernos,144
+20180818,Super Smash Brollers,20,Lincolnshire Rolling Thunder,649
+20180818,Manneken Beasts,84,Tyne and Fear Roller Derby,294
+20180818,Flour City Fear Men's Roller Derby,50,Chicago Bruise Brothers,320
+20180819,Manneken Beasts,341,Super Smash Brollers,136
+20180819,Barrow Infernos,101,Tyne and Fear Roller Derby,333
+20180819,Manneken Beasts,95,Lincolnshire Rolling Thunder,394
+20180819,Super Smash Brollers,110,Barrow Infernos,314
+20180819,Tyne and Fear Roller Derby,218,Lincolnshire Rolling Thunder,159
+20180901,Carolina Wreckingballs,285,Harm City Men's Derby,97
+20180901,Super Smash Brollers,162,Crash Test Brummies,199
+20180901,Carolina Wreckingballs,43,Philadelphia Hooligans,451
+20181125,Victoria Men's Roller Derby,168,Brisbane City Rollers,143
+20181124,Victoria Men's Roller Derby,322,Sydney City SMASH,48
+20181124,Victoria Men's Roller Derby,322,Varsity Derby League,56
+20181124,Brisbane City Rollers,271,Varsity Derby League,195
+20181118,Southern Discomfort,211,Manchester Roller Derby,135
+20181118,Tyne and Fear Roller Derby,239,Lincolnshire Rolling Thunder,170
+20181118,Manchester Roller Derby,277,Tyne and Fear Roller Derby,114
+20181118,Southern Discomfort,221,Lincolnshire Rolling Thunder,111
+20181117,Southern Discomfort,387,Glasgow Men's Roller Derby,91
+20181117,Tyne and Fear Roller Derby,275,Barrow Infernos,81
+20181117,West Swedish Roller Derby Society,81,Glasgow Men's Roller Derby,293
+20181103,Drive-By City Rollers,237,San Diego Aftershocks,164
+20181027,Victoria Men's Roller Derby,373,Varsity Derby League,98
+20181014,St. Louis Gatekeepers,162,Bridgetown Roller Derby,150
+20181014,Roller Derby Toulouse,374,Vancouver Murder,118
+20181014,Southern Discomfort,216,Manchester Roller Derby,112
+20181014,Texas Men's Roller Derby,236,Magic City Misfits,231
+20181014,Tyne and Fear Roller Derby,143,Lincolnshire Rolling Thunder,243
+20181014,Philadelphia Hooligans,186,Denver Ground Control,194
+20181013,Bridgetown Roller Derby,369,Vancouver Murder,105
+20181013,St. Louis Gatekeepers,230,Roller Derby Toulouse,71
+20181013,Denver Ground Control,176,Tyne and Fear Roller Derby,216
+20181013,Philadelphia Hooligans,194,Lincolnshire Rolling Thunder,294
+20181013,Southern Discomfort,214,Vancouver Murder,236
+20181013,Roller Derby Toulouse,197,Manchester Roller Derby,131
+20181012,Bridgetown Roller Derby,256,Texas Men's Roller Derby,186
+20181012,St. Louis Gatekeepers,211,Magic City Misfits,137
+20181012,Vancouver Murder,239,Tyne and Fear Roller Derby,147
+20181012,Texas Men's Roller Derby,198,Denver Ground Control,157
+20181012,Manchester Roller Derby,194,Lincolnshire Rolling Thunder,129
+20181012,Magic City Misfits,197,Philadelphia Hooligans,195
+20180929,Texas Men's Roller Derby,619,Houston Men's Roller Derby,19
+20180929,Manneken Beasts,265,Glasgow Men's Roller Derby,156
+20180923,Derby Club le Crès Lattes Montpellier,358,Crash Test Brummies,118
+20180923,Tampere Rollin' Bros,232,Super Smash Brollers,157
+20180923,Crash Test Brummies,164,South Wales Silures,179
+20180923,Derby Club le Crès Lattes Montpellier,168,Granite City Brawlers,218
+20180922,New York Shock Exchange,259,Toronto Men's Roller Derby,125
+20180922,Tampere Rollin' Bros,141,South Wales Silures,172
+20180922,Super Smash Brollers,156,Crash Test Brummies,282
+20180922,South Wales Silures,152,Granite City Brawlers,192
+20180922,Derby Club le Crès Lattes Montpellier,367,Super Smash Brollers,46
+20180922,Granite City Brawlers,205,Tampere Rollin' Bros,188
+20180909,Bridgetown Roller Derby,289,Vancouver Murder,87
+20180909,Sydney City SMASH,185,Varsity Derby League,237
+20180909,Victoria Men's Roller Derby,166,Brisbane City Rollers,119
+20180908,Varsity Derby League,100,Victoria Men's Roller Derby,344
+20180908,Sydney City SMASH,47,Brisbane City Rollers,370
+20180908,Sydney City SMASH,35,Victoria Men's Roller Derby,418
+20180908,Brisbane City Rollers,237,Varsity Derby League,65

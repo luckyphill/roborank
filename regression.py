@@ -887,11 +887,17 @@ class ImprovedRanking(Ranking):
 				elif team == "San Diego Aftershocks":
 					reg_input.append(800)
 				elif team == "Toronto Men's Roller Derby":
-					reg_input.append(600)
+					reg_input.append(800)
 				elif team == "Tyne and Fear Roller Derby":
 					reg_input.append(800)
 				elif team == "Harm City Men's Derby":
 					reg_input.append(600)
+				elif team == "Pittsburgh Blue Streaks":
+					reg_input.append(500)
+				elif team == "Flour City Fear Men's Roller Derby":
+					reg_input.append(500)
+				elif team == "Cleveland Men's Roller Derby":
+					reg_input.append(500)
 				else:
 					reg_input.append(self.teams[team].previous_powers[self.previous_ranking_dates[0]])
 						
@@ -1091,5 +1097,27 @@ class ImprovedRanking(Ranking):
 		self._output_ranking_detailed()
 		# for team in self.teams_with_new_games:
 		# 	self.plot_team(team)
+
+class WFTDAGame(Game):
+	def __init__(self, game_data):
+		Game.__init__(self, game_data)
+		self.WLFactorHome = 3 * float(self.home_score)/float(self.home_score + self.away_score)
+		self.WLFactorAway = 3 * float(self.away_score)/float(self.home_score + self.away_score)
+
+class WFTDATeam(Team):
+	def __init__(self, name):
+		Team.__init__(self,name)
+		self.game_points = []
+
+
 		
+class WFTDARanking(Ranking):
+	def __init__(self, start_date, end_date, games_file, previous_ranking_dates_file, teams_file, hiatus_file = None, disbanded_file = None):
+		Ranking.__init__(self, start_date, end_date, games_file, teams_file, hiatus_file, disbanded_file)
+
+	def calculate(self):
+		pass
+
+
+
 # Load a list of teams and handle teams that didn't play a game
